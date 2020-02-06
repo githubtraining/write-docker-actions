@@ -132,13 +132,27 @@ steps:
     # link: "{{ repoUrl }}/issue1/1"
     actions:
       - type: gate
-        left: "%payload.ref%"
-        operator: ===
-        right: "refs/heads/hello-world"
+        gates:
+          # if the payload action is 'opened' OR 'edited'
+          - left: "%payload.action%"
+            operator: ===
+            right: opened
+          - left: "%payload.action%"
+            operator: ===
+            right: edited
+            # AND the pull request title equals 'Create my-workflow.yml'
       - type: gate
-        left: "%payload.created%"
+        left: "%payload.pull_request.title%"
         operator: ===
-        right: true
+        right: Create action.yml
+
+        # if those statments FAIL... do this
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: Create my-workflow.yml
+          # if those gates === true Then do this stuff
       - type: respond
         with: 06_hello-docker-actions.md
         action_id: helloPr

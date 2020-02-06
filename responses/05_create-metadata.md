@@ -26,4 +26,4 @@ We will start with using the parameters that are **required** and later implemen
 
 ---
 
-I'll respond when I notice you have completed these steps
+I'll respond in your new pull request when I notice you have completed these steps
