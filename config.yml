@@ -1,17 +1,407 @@
-title: write docker actions
-tagline: A brand new course on Learning Lab
-description: Learn to write Docker container based GitHub Actions
+title: "GitHub Actions: Writing Docker Actions"
+tagline: Create custom automation tasks for your unique workflow using GitHub Actions
+description: >-
+  Learn how to write your own GitHub Docker Action!  This course will
+  empower you to begin automating customized tasks unique to your workflow.
 template:
-  repo: write-docker-actions-template
-  name: write-docker-actions
+  repo: "writing-docker-actions-template"
+  name: "writing-docker-actions"
 before:
+  - type: updateBranchProtection
   - type: createIssue
-    title: Welcome!
-    body: new-issue.md
+    title: Start here!
+    body: 01_welcome-issue.md
+    action_id: welcomeIssue
+  - type: respond
+    issue: "%actions.welcomeIssue.data.number%"
+    with: 01_welcome-activity.md
+    data:
+      quicklink: "%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank"
+      actionsUrl: "%payload.repository.html_url%/actions/new"
 steps:
-  - title: First step
-    description: The first step in your course
-    event: issues.assigned
-    link: '{{ repoUrl }}'
+  - title: Setup a workflow file
+    description: Create a pull request to add a workflow
+    event: pull_request
+    link: "{{ repoUrl }}/issues/1"
     actions:
+      - type: gate
+        gates:
+          # if the payload action is 'opened' OR 'edited'
+          - left: "%payload.action%"
+            operator: ===
+            right: opened
+          - left: "%payload.action%"
+            operator: ===
+            right: edited
+            # AND the pull request title equals 'Create my-workflow.yml'
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Create my-workflow.yml
+
+        # if those statments FAIL... do this
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: Create my-workflow.yml
+          # if those gates === true Then do this stuff
       - type: closeIssue
+        issue: Start here!
+      - type: respond
+        with: 01_explain-workflow.md
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+      - type: respond
+        with: 01_explain-environment.md
+      - type: respond
+        with: 01_explain-syntax.md
+
+  - title: Run a workflow
+    description: Wait for GitHub to run the workflow and report back the results
+    event: check_suite.completed
+    link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: gate
+        left: "%payload.check_suite.app.name%"
+        operator: ===
+        right: "GitHub Actions"
+        else:
+          - type: respond
+            issue: Initial workflow
+            with: debug.md
+            data:
+              debug: "%payload%"
+      - type: respond
+        with: 02_workflow-results.md
+        issue: Create my-workflow.yml
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+      - type: getPullRequest
+        pullRequest: Create my-workflow.yml
+        action_id: iwPr
+      - type: respond
+        with: 02_modify-workflow.md
+        issue: Create my-workflow.yml
+        data:
+          workflowFile: "%payload.repository.html_url%/edit/%actions.iwPr.data.head.ref%/.github/workflows/my-workflow.yml"
+
+  - title: Add an Action reference
+    description: Add an Action reference to the workflow file
+    event: pull_request.synchronize
+    link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: getPullRequest
+        pullRequest: Create my-workflow.yml
+        action_id: workflowPr
+      - type: respond
+        with: 03_reference-actions.md
+        data:
+          workflowFile: "%payload.repository.html_url%/edit/%actions.workflowPr.data.head.ref%/.github/workflows/my-workflow.yml"
+
+  - title: Creating the Action metadata
+    description: Create an action.yml file and add necessary metatdata for our Action
+    event: pull_request.synchronize
+    actions:
+      - type: createIssue
+        title: Your first Docker action
+        body: docker-overview.md
+        action_id: dockerOverview
+      - type: createReview
+        event: APPROVE
+        body: 04_on-to-actions.md
+        data:
+          issueUrl: "%actions.dockerOverview.data.html_url%"
+        pullRequest: Create my-workflow.yml
+      - type: mergePullRequest
+      - type: respond
+        with: 05_explain-actions.md
+        issue: Your first Docker action
+      - type: respond
+        with: 05_explain-metadata.md
+        issue: Your first Docker action
+      - type: respond
+        with: 05_create-metadata.md
+        issue: Your first Docker action
+        data:
+          quicklink: "%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/action.yml"
+
+  - title: Creating the action logic
+    description: Adding source code to the action
+    event: push
+    # link: "{{ repoUrl }}/issue1/1"
+    actions:
+      - type: gate
+        left: "%payload.ref%"
+        operator: ===
+        right: "refs/heads/hello-world"
+      - type: gate
+        left: "%payload.created%"
+        operator: ===
+        right: true
+      - type: createPullRequest
+        title: Hello Action
+        body: 06_hello-docker-actions.md
+        head: hello-world
+        action_id: helloPr
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+      - type: respond
+        with: 05_hello-pr.md
+        issue: Your first Docker action
+        data:
+          pullUrl: "%actions.helloPr.data.html_url%"
+      - type: closeIssue
+        issue: Your first Docker action
+
+  - title: Create the action Dockerfile
+    description: Creat a Dockerfile containing the actions source code
+    event: pull_request.synchronize
+    actions:
+      - type: respond
+        with: 07_create-dockerfile.md
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+
+  - title: Adding input parameters
+    description: extend your action to accept input parameters
+    event: pull_request.synchronize #ideally would like the workflow completing to tigger this
+    actions:
+      - type: respond
+        with: 07_hello-result.md
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+      ########################################################################
+      ########### Major changes ahead ##############################
+      ########################################################################
+      - type: respond
+        with: 07_add-input-params.md
+      - type: respond
+        with: 07_update-files.md
+
+  - title: Exploring your input parameters
+    description: view the results of adding input parameter
+    event: pull_request.synchronize #ideally would like workflow complete to trigger this
+    actions:
+      - type: respond
+        with: 08_input-result.md
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+      - type: removeBranchProtection
+      - type: respond
+        with: 08_experiment.md
+
+  - title: Integrating Actions with external APIs
+    description: Write a new Action that call an external API
+    event: pull_request.closed
+    actions:
+      - type: updateBranchProtection
+      - type: createIssue
+        body: 09_joking-around.md
+        title: Knock Knock...
+        action_id: jokeIssue
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+      - type: respond
+        with: 08_next-steps.md
+        issue: Hello Action
+        data:
+          issueUrl: "%actions.jokeIssue.data.html_url%"
+      - type: respond
+        with: 09_new-action.md
+        issue: Knock Knock...
+        data:
+          # The following workflowFile var does not point where it should for some reason
+          workflowFile: "%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml"
+          actionsUrl: "%payload.repository.html_url%/actions"
+
+  - title: Prevent the workflow from running
+    description: Comment out the lines in the workflow to prevent unwanted runs
+    event: pull_request
+    # link: "{{ repoUrl }}/issue1/1"
+    actions:
+      - type: gate
+        gates:
+          # if the payload action is 'opened' OR 'edited'
+          - left: "%payload.action%"
+            operator: ===
+            right: opened
+          - left: "%payload.action%"
+            operator: ===
+            right: edited
+            # AND the pull request title equals 'Create my-workflow.yml'
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: External APIs
+
+        # if those statments FAIL... do this
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: External APIs
+          # if those gates === true Then do this stuff
+      - type: closeIssue
+        issue: Knock Knock...
+      - type: respond
+        with: 10_action-two.md
+
+  - title: Create your new Action metadata
+    description: Add action.yml file for new joke action
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: External APIs
+      - type: respond
+        with: 10_create-metadata.md
+
+  - title: Create your Actions JavaScript files
+    description: Add joke.j and main.js to your Action
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: External APIs
+      - type: respond
+        with: 10_create-js-files.md
+
+  - title: Use the joke Action in a workflow
+    description: Edit the workflow file to now use the newly created joke Action
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: External APIs
+      - type: getPullRequest
+        pullRequest: External APIs
+        action_id: apiPr
+      - type: respond
+        with: 11_edit-workflow.md
+        data:
+          workflowFile: "%payload.repository.html_url%/edit/%actions.apiPr.data.head.ref%/.github/workflows/my-workflow.yml"
+          actionsUrl: "%payload.repository.html_url%/actions"
+
+  - title: Having Actions tell a joke... or two
+    description: Wait for your Action to present you with a joke
+    event: pull_request.synchronize
+    # link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: removeBranchProtection
+      - type: respond
+        with: 12_trigger-workflow.md
+        issue: External APIs
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+
+  - title: Configure the workflow for a third Action
+    description: Edit the workflow to accomodate the third action
+    event: pull_request.closed
+    actions:
+      - type: updateBranchProtection
+      - type: createIssue
+        body: 13_action-three-workflow.md
+        title: Consuming Action Outputs
+        action_id: outputIssue
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+          workflowFile: "%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml"
+      - type: respond
+        with: 12_next-steps.md
+        issue: External APIs
+        data:
+          issueUrl: "%actions.outputIssue.data.html_url%"
+
+  - title: Write the final Action
+    description: Create an Action that consumes output from another Action and uses Octokit
+    event: pull_request
+    # link: "{{ repoUrl }}/issue1/1"
+    actions:
+      - type: gate
+        gates:
+          # if the payload action is 'opened' OR 'edited'
+          - left: "%payload.action%"
+            operator: ===
+            right: opened
+          - left: "%payload.action%"
+            operator: ===
+            right: edited
+            # AND the pull request title equals 'Create my-workflow.yml'
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Use Outputs
+
+        # if those statments FAIL... do this
+        else:
+          - type: respond
+            with: e-rename-pr.md
+            data:
+              title: Use Outputs
+          # if those gates === true Then do this stuff
+      - type: closeIssue
+        issue: Consuming Action Outputs
+      - type: respond
+        with: 14_action-three.md
+
+  - title: Add third Actions metadata
+    description: Create the metadata for the third Action
+    event: pull_request.synchronize
+    # link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Use Outputs
+      - type: respond
+        with: 14_create-metadata.md
+
+  - title: Add third Actions JavaScript files
+    description: Create the JavaScript files for the third Action
+    event: pull_request.synchronize
+    # link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Use Outputs
+      - type: respond
+        with: 14_create-js-files.md
+      - type: respond
+        with: 14_js-files-activity.md
+
+  - title: Trigger the third Action
+    description: Add a pull request label to trigger the workflow
+    event: pull_request.synchronize
+    # link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Use Outputs
+      - type: removeBranchProtection
+      - type: respond
+        with: 15_add-a-label.md
+        data:
+          actionsUrl: "%payload.repository.html_url%/actions"
+
+  - title: Wrapping things up
+    description: Final notes before you go
+    event: pull_request.closed
+    actions:
+      - type: createIssue
+        title: Last minute notes
+        body: great-job.md
+      - type: respond
+        issue: Last minute notes
+        with: 16_using-ncc.md
+      - type: respond
+        issue: Last minute notes
+        with: 16_publishing.md
+      - type: respond
+        issue: Last minute notes
+        with: 16_complete.md
