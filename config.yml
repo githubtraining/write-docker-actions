@@ -128,7 +128,7 @@ steps:
 
   - title: Creating the action logic
     description: Adding source code to the action
-    event: push
+    event: pull_request
     # link: "{{ repoUrl }}/issue1/1"
     actions:
       - type: gate
@@ -139,10 +139,8 @@ steps:
         left: "%payload.created%"
         operator: ===
         right: true
-      - type: createPullRequest
-        title: Hello Action
-        body: 06_hello-docker-actions.md
-        head: hello-world
+      - type: respond
+        with: 06_hello-docker-actions.md
         action_id: helloPr
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
@@ -163,22 +161,37 @@ steps:
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
 
-  - title: Adding input parameters
+  - title: Adding input parameters to metadata
     description: extend your action to accept input parameters
-    event: pull_request.synchronize #ideally would like the workflow completing to tigger this
+    event: pull_request.synchronize
     actions:
       - type: respond
         with: 07_hello-result.md
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
-      ########################################################################
-      ########### Major changes ahead ##############################
-      ########################################################################
+
       - type: respond
         with: 07_add-input-params.md
       - type: respond
-        with: 07_update-files.md
+        with: 07_update-metadata.md
 
+  - title: Adding input parameters to source code files
+    description: extend your action to accept input parameters
+    event: pull_request.synchronize
+    actions:
+      - type: respond
+        with: 07_update-source-code.md
+
+  - title: Using input parameters in the workflow
+    description: Assign values to the newly created input parameters
+    event: pull_request.synchronize
+    actions:
+      - type: respond
+        with: 07_update-workflow.md
+
+      ########################################################################
+      ########### Major changes ahead ##############################
+      ########################################################################
   - title: Exploring your input parameters
     description: view the results of adding input parameter
     event: pull_request.synchronize #ideally would like workflow complete to trigger this

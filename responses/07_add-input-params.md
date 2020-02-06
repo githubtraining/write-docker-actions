@@ -1,10 +1,6 @@
-# 🛑 Stop here, You haven't changed anything past this point
-
 ## Using input parameters
 
-Earlier I asked you to install the `@actions/core` package using `npm`. We did this so that we can expand our action to make it more flexible.
-
-A "Hello World" message is great, but let's personalize it a little bit. We will do this by adding an **input** parameter to the `action.yml` and `main.js` files.
+A "Hello World" message is great, but let's personalize it a little bit. We will do this by adding an **input** parameter to the `action.yml`, `workflow.yml` and `main.go` files.
 
 Although this example may seem a little lightweight input parameters have a very flexible use case. Consider a scenario where you need to access secret API key with your action, or when you need to specify the path to a given file. Inputs allows for these problems to be easily solved.
 
@@ -60,7 +56,7 @@ The example below demonstrates a mix of both:
 **my-workflow.yml**
 
 ```yaml
-name: "JS Actions"
+name: "Docker Actions"
 
 on: [push]
 
@@ -76,27 +72,46 @@ jobs:
           first-greeting: "Learning Lab User"
 ```
 
-Now that there are inputs in the action's metadata we can use the `@actions/core` package to handle them within our `main.js` file.
+Now that there are inputs in the action's metadata the **user** can interface with them by supplying values. In this case **Learning Lab User** was passed as the value for the `first-greeting` input which overrides the **default** value, specified in the `action.yml`, of **Hubot**
 
-**main.js**
+**main.go**
 
-```javascript
-const core = require("@actions/core");
+```go
+package main
 
-const firstGreeting = core.getInput("first-greeting"):
-const secondGreeting = core.getInput("second-greeting");
-const thirdGreeting = core.getInput("third-greeting");
+import (
+	"fmt"
+	"os"
+)
 
-console.log(`Hello ${firstGreeting}`);
-console.log(`Hello ${secondGreeting}`);
-if (thirdGreeting) {
-    console.log(`Hello ${thirdGreeting}`);
+func main() {
+
+  // Access Inputs as environment vars
+  firstGreeting := os.Getenv("INPUT_FIRST-GREETING")
+  secondGreeting := os.Getenv("INPUT_SECOND-GREETING")
+  thirdGreeting := os.Getenv("INPUT_THIRD-GREETING")
+
+  // Use those inputs in the actions logic
+  fmt.Println("Hello " + firstGreeting)
+  fmt.Println("Hello " + secondGreeting)
+
+  // Someimes inputs are not "required" and we can build around that
+  if thirdGreeting != "" {
+    fmt.Println("Hello " + thirdGreeting)
+    }
+
 }
 ```
 
-By using `core.getInput()` we can specify the string of any input parameter we have placed inside of the `action.yml` file.
+In our actions source code we can access the inputs as if they are environment variables. GitHub Actions takes every `inputs:` value and converts it by adding `INPUT_` and making the value uppercase.
 
-The `@actions/core` package brings a few more methods along with it to help us interact with the GitHub Actions platform. If writing actions is something you plan to continue doing it's work reading the [documentation](https://github.com/actions/toolkit/tree/master/packages/core) about this package.
+For example:
+
+- `first-greeting` = `INPUT_FIRST-GREETING`
+- `second-greeting` = `INPUT_SECOND-GREETING`
+- `someInput` = `INPUT_SOMEINPUT`
+
+_How you access environment variables will vary by language_
 
 ---
 

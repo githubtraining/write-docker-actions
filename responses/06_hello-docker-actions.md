@@ -25,4 +25,4 @@ The first iteration of our action will follow the traditional path of logging "H
 
 I'll respond here once you've completed those steps!
 
-📖 [Learn shell scripting](https://tour.golang.org/welcome/1)
+📖 [Learn Go programming](https://tour.golang.org/welcome/1)
