@@ -8,6 +8,15 @@ template:
   name: "write-docker-actions"
 before:
   - type: updateBranchProtection
+  - type: createLabel
+    name: first-cat-fact
+    color: FFBD33
+  - type: createLabel
+    name: second-cat-fact
+    color: 33FFBD
+  - type: createLabel
+    name: third-cat-fact
+    color: 3F8A99
   - type: createIssue
     title: Start here!
     body: 01_welcome-issue.md
@@ -203,9 +212,6 @@ steps:
       - type: respond
         with: 07_update-workflow.md
 
-      ########################################################################
-      ########### Major changes ahead ##############################
-      ########################################################################
   - title: Exploring your input parameters
     description: view the results of adding input parameter
     event: pull_request.synchronize #ideally would like workflow complete to trigger this
@@ -224,25 +230,25 @@ steps:
     actions:
       - type: updateBranchProtection
       - type: createIssue
-        body: 09_joking-around.md
-        title: Knock Knock...
-        action_id: jokeIssue
+        body: 09_external-apis.md
+        title: Kittens everywhere
+        action_id: catFact
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
       - type: respond
         with: 08_next-steps.md
         issue: Hello Action
         data:
-          issueUrl: "%actions.jokeIssue.data.html_url%"
+          issueUrl: "%actions.catFact.data.html_url%"
       - type: respond
         with: 09_new-action.md
-        issue: Knock Knock...
+        issue: Kittens everywhere
         data:
           # The following workflowFile var does not point where it should for some reason
           workflowFile: "%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml"
           actionsUrl: "%payload.repository.html_url%/actions"
 
-  - title: Prevent the workflow from running
+  - title: Create your new Action metadata
     description: Comment out the lines in the workflow to prevent unwanted runs
     event: pull_request
     # link: "{{ repoUrl }}/issue1/1"
@@ -270,22 +276,11 @@ steps:
               title: External APIs
           # if those gates === true Then do this stuff
       - type: closeIssue
-        issue: Knock Knock...
-      - type: respond
-        with: 10_action-two.md
-
-  - title: Create your new Action metadata
-    description: Add action.yml file for new joke action
-    event: pull_request.synchronize
-    actions:
-      - type: gate
-        left: "%payload.pull_request.title%"
-        operator: ===
-        right: External APIs
+        issue: Kittens everywhere
       - type: respond
         with: 10_create-metadata.md
 
-  - title: Create your Actions JavaScript files
+  - title: Create your Actions source code files
     description: Add joke.j and main.js to your Action
     event: pull_request.synchronize
     actions:
@@ -294,10 +289,10 @@ steps:
         operator: ===
         right: External APIs
       - type: respond
-        with: 10_create-js-files.md
+        with: 10_create-python-file.md
 
-  - title: Use the joke Action in a workflow
-    description: Edit the workflow file to now use the newly created joke Action
+  - title: Use the cat fact action in a workflow
+    description: Edit the workflow file to now use the newly created cat fact action
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -313,8 +308,8 @@ steps:
           workflowFile: "%payload.repository.html_url%/edit/%actions.apiPr.data.head.ref%/.github/workflows/my-workflow.yml"
           actionsUrl: "%payload.repository.html_url%/actions"
 
-  - title: Having Actions tell a joke... or two
-    description: Wait for your Action to present you with a joke
+  - title: Having actions teach us about cats
+    description: Trigger your workflow to get cat facts
     event: pull_request.synchronize
     # link: "{{ repoUrl }}/pull/2"
     actions:
@@ -324,7 +319,9 @@ steps:
         issue: External APIs
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
-
+      ########################################################################
+      ########### Major changes ahead ##############################
+      ########################################################################
   - title: Configure the workflow for a third Action
     description: Edit the workflow to accomodate the third action
     event: pull_request.closed

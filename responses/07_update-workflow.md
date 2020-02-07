@@ -15,13 +15,13 @@ The last piece to this actions puzzle is to edit the workflow file so that we ca
 
    jobs:
    action:
-       runs-on: "ubuntu-latest"
-       steps:
+     runs-on: "ubuntu-latest"
+     steps:
        - uses: actions/checkout@v1
 
        - name: "hello-action"
-           uses: ./.github/actions/hello-world
-           with:
+         uses: ./.github/actions/hello-world
+         with:
            first-greeting: "Learning Lab User"
    ```
 

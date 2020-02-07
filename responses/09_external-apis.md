@@ -1,8 +1,10 @@
-## Who's there?
+## Cat Facts anyone?
 
-GitHub Actions... thats who!
+![Kittens everywhere meme](https://user-images.githubusercontent.com/38021615/74055102-361bcb00-4994-11ea-9525-3aef295f0373.png)
 
 The next action we write is going to reach out to an external API and fetch data for consumption. Although your action is bound to a step, which is bound to a workflow within your repository it is NOT bound to an isolated network. This means that we can leverage APIs from our favorite cloud providers, favorite pizza shops, social media or whatever API our developers need.
+
+<details><summary>Unsure what an API is?  Click here!</summary>
 
 ### What is an API
 
@@ -49,12 +51,12 @@ APIs also give you, the developer, the ability to give others access to specific
 
 📺 [Watch](https://www.youtube.com/watch?v=BWnDYH_59SY) this 30 second video on APIs
 
-### What about our action?
+</details>
 
-We are now going to write an action that reaches out to a service through its REST API to get us a random joke. We will then display that joke on the [Actions tab]({{actionsUrl}}).
+### How does that apply to our next action?
+
+We are now going to write an action that reaches out to a service through its REST API to get us a random cat fact. We will then display that fact on the [Actions tab]({{actionsUrl}}).
 
 For our purposes the API we use will not require authentication, however that is a limitation of the course content and not the GitHub Actions platform. If you need to store secrets, like API keys, for your workflow to use you will need to configure [secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets) as inputs.
-
-We are also going to demonstrate having multiple files make up an action as well as importing other external libraries for your action to use.
 
 What are we waiting for, let's get started 😉

@@ -1,38 +1,29 @@
 ### :keyboard: Activity: Create the metadata file
 
-💡All of the following steps take place inside of the `.github/actions/joke-action` directory.
+💡All of the following steps take place inside of the `.github/actions/cat-facts` directory.
 
 Our action does not require much metadata for it to run correctly. We will not be accepting any inputs, we will however be setting a single output this time.
 
-We will not use the `joke-output` in in this portion of the course. There will be a later step that will rely on this actions output.
+We will not use the `fact-output` in in this portion of the course. There will be a later step that will rely on this actions output.
 
-1. Create the action metadata file `.github/actions/joke-action/action.yml`
-2. Use the `name` parameter to name your action `"external API action"`
-3. Next, add a `description` parameter and give it a value of `"use an external API to retrieve and display a joke"`
-4. Create an `outputs:` with an id of `joke-output:` and add a `description:` so we know what the output is for
-5. Lastly, define the `runs:` parameter to use `"node12"` and set the `main:` parameter to `"main.js"`
-
-   <details><summary>View the complete file</summary>
+1. Create and add the following contents to the `.github/actions/cat-facts/action.yml` file:
 
    ```yaml
-   name: "external API action"
+   name: "my cat fact action"
 
-   description: "use an external API to retrieve and display a joke"
+   description: "Get external data with GitHub Actions"
 
    outputs:
-     joke-output:
-       description: The resulting joke from the icanhazdadjokes API
+     fact-output:
+       description: Resulting cat fact from the https://cat-fact.herokuapp.com/facts api
 
    runs:
-     using: "node12"
-     main: "main.js"
+     using: "docker"
+     image: "Dockerfile"
    ```
 
-   </details>
+1. Commit the changes to the branch named `action-two`
 
-6. Save the `action.yml` file
-7. commit the changes:
-   `git add action.yml`
-   `git commit -m 'add metadata for the joke action'`
-8. push them to the `action-two` branch:
-   `git push`
+---
+
+I'll respond in this pull request when I notice you have completed these steps

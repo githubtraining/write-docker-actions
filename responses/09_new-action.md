@@ -1,10 +1,12 @@
 ## Breaking our workflow
 
-Before we continue we are going to need to do a few things. First and foremost our workflow is currently setup to run each time there is a `push` event to this repository. Let's comment out our current workflow to prevent things from running but preserve the things you've worked on up to this point.
+Before we continue we are going to need to do a few things. First and foremost our workflow is currently setup to run each time there is a `push` event to this repository. As you can imagine, this generates a lot of noise when learning.
+
+Let's comment out our current workflow to prevent things from running but preserve the things you've worked on up to this point.
 
 ### :keyboard: Activity: Setting up the next action
 
-1. [Edit]({{workflowFile}}) your workflow file by commenting out every single line.
+1. [Edit]({{workflowFile}}) your workflow file by commenting out every single line with the `#` character.
 2. Commit the changes to a new branch and name it `action-two`.
 3. Create a pull request named **External APIs**
 4. Supply the pull request with body content. Remember, this area can be used a notes later.
@@ -20,7 +22,7 @@ Like our first action, I'll respond in the new pull request when I detect it has
 <details><summary>The complete workflow can be viewed by clicking here</summary>
 
 ```yaml
-# name: JS Actions
+# name: Docker Actions
 
 # on: [push]
 
@@ -34,6 +36,8 @@ Like our first action, I'll respond in the new pull request when I detect it has
 
 #     - name: hello-action
 #       uses: ./.github/actions/hello-world
+#       with:
+#         first-greeting: "Learning Lab User"
 ```
 
 </details>
