@@ -14,17 +14,17 @@ Now that we know what input parameters are, let's edit the metadata for our **he
    description: "say hello with GitHub Actions"
 
    inputs:
-     first-greeting:
+     firstGreeting:
        description: "who would you like to greet in the console"
        required: true
        default: "Hubot"
 
-     second-greeting:
+     secondGreeting:
        description: "another person to greet"
        required: true
        default: "Mona the Octocat"
 
-     third-greeting:
+     thirdGreeting:
        description: "a third greeting"
        required: false
 

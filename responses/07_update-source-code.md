@@ -19,9 +19,9 @@ Great job 👍 next let's update our source code to consume the inputs that are 
    func main() {
 
    // Access Inputs as environment vars
-   firstGreeting := os.Getenv("INPUT_FIRST-GREETING")
-   secondGreeting := os.Getenv("INPUT_SECOND-GREETING")
-   thirdGreeting := os.Getenv("INPUT_THIRD-GREETING")
+   firstGreeting := os.Getenv("INPUT_FIRSTGREETING")
+   secondGreeting := os.Getenv("INPUT_SECONDGREETING")
+   thirdGreeting := os.Getenv("INPUT_THIRDGREETING")
 
    // Use those inputs in the actions logic
    fmt.Println("Hello " + firstGreeting)

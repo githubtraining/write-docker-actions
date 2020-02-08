@@ -2,7 +2,7 @@
 
 **Cat Fact API**
 
-We will be using the [caf-fact API](https://cat-fact.herokuapp.com/facts) for our action. This API does not require any authentication making it an ideal teaching tool.
+We will be using the [cat-fact API](https://cat-fact.herokuapp.com/facts) for our action. This API does not require any authentication making it an ideal teaching tool.
 
 When we make our request to this API we will get back an array JSON Objects in the response. An individual Object looks like this:
 
@@ -33,9 +33,9 @@ If Python is a new programming language to you, like always don't worry. You are
 
 ---
 
-### :keyboard: Activity: Creating the javascript files for your new action.
+### :keyboard: Activity: Creating the Python source code for your new action.
 
-1. Create and add the following contents to the `.github/actions/cat-facts/main.py` file:
+1. Create and add the following contents to the `.github/actions/cat-facts/src/main.py` file:
 
    ```python
    import requests
@@ -66,7 +66,7 @@ If Python is a new programming language to you, like always don't worry. You are
    print(random_fact)
 
    # Set the fact-output of the action as the value of random_fact
-   print(f"::set-output name=fact-output::{random_fact}")
+   print(f"::set-output name=fact::{random_fact}")
    ```
 
 1. Commit the changes to the `action-two` branch:

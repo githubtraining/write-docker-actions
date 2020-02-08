@@ -280,8 +280,8 @@ steps:
       - type: respond
         with: 10_create-metadata.md
 
-  - title: Create your Actions source code files
-    description: Add joke.j and main.js to your Action
+  - title: Create your action's source code files
+    description: Add main.py to your Action
     event: pull_request.synchronize
     actions:
       - type: gate
@@ -290,6 +290,17 @@ steps:
         right: External APIs
       - type: respond
         with: 10_create-python-file.md
+
+  - title: Create the Dockerfile for the action
+    description: Add the Dockerfile to the action
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: External APIs
+      - type: respond
+        with: 10_create-dockerfile.md
 
   - title: Use the cat fact action in a workflow
     description: Edit the workflow file to now use the newly created cat fact action
@@ -341,7 +352,7 @@ steps:
           issueUrl: "%actions.outputIssue.data.html_url%"
 
   - title: Write the final Action
-    description: Create an Action that consumes output from another Action and uses Octokit
+    description: Create an Action that consumes output from another Action and uses the JavaScript actions toolkit
     event: pull_request
     # link: "{{ repoUrl }}/issue1/1"
     actions:

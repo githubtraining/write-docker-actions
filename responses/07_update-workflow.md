@@ -22,7 +22,7 @@ The last piece to this actions puzzle is to edit the workflow file so that we ca
        - name: "hello-action"
          uses: ./.github/actions/hello-world
          with:
-           first-greeting: "Learning Lab User"
+           firstGreeting: "Learning Lab User"
    ```
 
 1. Commit the changes to the `hello-world` branch

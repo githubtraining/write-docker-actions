@@ -24,17 +24,17 @@ name: "my hello action"
 description: "say hello with actions"
 
 inputs:
-  first-greeting:
+  firstGreeting:
     description: "who would you like to greet in the console"
     required: true
     default: "Hubot"
 
-  second-greeting:
+  secondGreeting:
     description: "another person to greet"
     required: true
     default: "Mona the Octocat"
 
-  third-greeting:
+  thirdGreeting:
     description: "a third greeting"
     required: false
 ```
@@ -69,10 +69,10 @@ jobs:
       - name: "hello-action"
         uses: ./.github/actions/hello-world
         with:
-          first-greeting: "Learning Lab User"
+          firstGreeting: "Learning Lab User"
 ```
 
-Now that there are inputs in the action's metadata the **user** can interface with them by supplying values. In this case **Learning Lab User** was passed as the value for the `first-greeting` input which overrides the **default** value, specified in the `action.yml`, of **Hubot**
+Now that there are inputs in the action's metadata the **user** can interface with them by supplying values. In this case **Learning Lab User** was passed as the value for the `firstGreeting` input which overrides the **default** value, specified in the `action.yml`, of **Hubot**
 
 **main.go**
 
@@ -87,9 +87,9 @@ import (
 func main() {
 
   // Access Inputs as environment vars
-  firstGreeting := os.Getenv("INPUT_FIRST-GREETING")
-  secondGreeting := os.Getenv("INPUT_SECOND-GREETING")
-  thirdGreeting := os.Getenv("INPUT_THIRD-GREETING")
+  firstGreeting := os.Getenv("INPUT_FIRSTGREETING")
+  secondGreeting := os.Getenv("INPUT_SECONDGREETING")
+  thirdGreeting := os.Getenv("INPUT_THIRDGREETING")
 
   // Use those inputs in the actions logic
   fmt.Println("Hello " + firstGreeting)
@@ -107,8 +107,8 @@ In our actions source code we can access the inputs as if they are environment v
 
 For example:
 
-- `first-greeting` = `INPUT_FIRST-GREETING`
-- `second-greeting` = `INPUT_SECOND-GREETING`
+- `firstGreeting` = `INPUT_FIRSTGREETING`
+- `secondGreeting` = `INPUT_SECONDGREETING`
 - `someInput` = `INPUT_SOMEINPUT`
 
 _How you access environment variables will vary by language_

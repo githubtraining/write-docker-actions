@@ -37,7 +37,7 @@ Like our first action, I'll respond in the new pull request when I detect it has
 #     - name: hello-action
 #       uses: ./.github/actions/hello-world
 #       with:
-#         first-greeting: "Learning Lab User"
+#         firstGreeting: "Learning Lab User"
 ```
 
 </details>
