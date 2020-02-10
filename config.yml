@@ -291,6 +291,17 @@ steps:
       - type: respond
         with: 10_create-python-file.md
 
+  - title: Add Python dependencies
+    description: Add the requirements.txt file
+    event: pull_request.synchronize
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: External APIs
+      - type: respond
+        with: 10_create-requirements.md
+
   - title: Create the Dockerfile for the action
     description: Add the Dockerfile to the action
     event: pull_request.synchronize
@@ -330,9 +341,7 @@ steps:
         issue: External APIs
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
-      ########################################################################
-      ########### Major changes ahead ##############################
-      ########################################################################
+
   - title: Configure the workflow for a third Action
     description: Edit the workflow to accomodate the third action
     event: pull_request.closed
@@ -406,8 +415,18 @@ steps:
         right: Use Outputs
       - type: respond
         with: 14_create-js-files.md
+
+  - title: Create the final actions Dockerfile
+    description: Add a pull request label to trigger the workflow
+    event: pull_request.synchronize
+    # link: "{{ repoUrl }}/pull/2"
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Use Outputs
       - type: respond
-        with: 14_js-files-activity.md
+        with: 14_create-dockerfile.md
 
   - title: Trigger the third Action
     description: Add a pull request label to trigger the workflow
@@ -424,6 +443,9 @@ steps:
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
 
+      ########################################################################
+      ########### Major changes ahead ##############################
+      ########################################################################
   - title: Wrapping things up
     description: Final notes before you go
     event: pull_request.closed

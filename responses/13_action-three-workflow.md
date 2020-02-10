@@ -57,6 +57,7 @@ We need to make some edits to the `my-workflow.yml` file to get it configured to
            with:
              repoToken: {% raw %}${{secrets.GITHUB_TOKEN}}{% endraw %}
              catFact: {% raw %}${{steps.cat.outputs.fact}}{% endraw %}
+             issueTitle: "a cat fact for you"
    ```
 
 1. Commit the changes to a new branch and name it `action-three`.
@@ -65,3 +66,5 @@ We need to make some edits to the `my-workflow.yml` file to get it configured to
 Like our other actions, I'll respond in the new pull request when I detect it has been opened.
 
 ---
+
+I will respond once you have finished.

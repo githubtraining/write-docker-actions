@@ -1,68 +1,62 @@
-## Create and edit the third actions action.yml file
+## Create the third actions action.yml file
 
 Like our "hello world" action, this action will require at least one `input:` parameter. We need this parameter so that our JavaScript for this action has access to the `output:` from the joke action.
 
-If you recall, in the `my-workflow.yml` file, we stated this action would take a specific input named `joke:` and we set it's value to the output of the previous action.
+If you recall, in the `my-workflow.yml` file, we stated this action would take a specific input named `catFact:` and we set it's value to the output of the previous action.
 
 ```yaml
 - name: create-issue
   uses: ./.github/actions/issue-maker
   with:
-    joke: {% raw %}${{steps.jokes.outputs.joke-output}}{% endraw %}
+    catFact: {% raw %}${{steps.cat.outputs.fact}}{% endraw %}
 ```
 
-Because of this, we need to define `joke:` as one of our `inputs:` for this action. Remember when we did this with the first action? It looked a little like this:
+Because of this, we need to define `catFact:` as one of our `inputs:` for this action. Remember when we did this with the first action? It looked a little like this:
 
 ```yaml
 inputs:
-  first-greeting:
-    description: who you would like to greet in the console
+  catFact:
+    description: "the cat fact retreived from a previous action"
     required: true
-    default: Hubot
+    default: "Mona is an Octocat"
 ```
 
-Now, we will do something similar so that our action matches what our workflow expects.
+We also will also need to authenticate to GitHub with the action so that we can interact with the GitHub API. For that we will use a special token that gets created for us when we use actions called [GITHUB_TOKEN](https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token)
+
+Our action will also need to accept an input so that we can let the user specify a name for the issue that will be created when this action runs.
+
+---
 
 ### :keyboard: Activity: Create the final metadata file
 
 💡All of the following steps take place inside of the `.github/actions/issue-maker` directory.
 
-We will use the `joke-output`, as well as an issue title, in in this portion of the course so we need to accept `inputs:` for our action.
+1. Create and add the following contents to the `.github/actions/issue-maker/action.yml` file:
 
-1. Create a file named `action.yml`
-2. Use the `name` parameter to name your action `"issue maker"`
-3. Next, add a `description` parameter and give it a value of `"consume the output of the previous action and create a new issue in the repository"`
-4. Create an `inputs:` with an id of `joke:` and add a `description:` of `"This will become the body of the created issue"`
-5. Create another `inputs:` with an id of `issue-title:` and a `description:` of `"Every issue needs a title, it's nice to supply one, even though you could do this dynamically within your code"`
-6. Give the `issue-title:` a `default:` value of `"a joke for you"` and make it a `required:` parameter
-7. Lastly, define the `runs:` parameter to use `"node12"` and set the `main:` parameter to `"main.js"`
-8. Save the `action.yml` file
-9. commit the changes:
-   `git add action.yml`
-   `git commit -m 'create action.yml'`
-10. push the changes to the `action-three` branch:
-    `git push`
+   ```yml
+   name: "issue maker"
 
----
+   description: "create and issue with a cat fact as the body"
 
-<details><summary>View the complete file</summary>
+   inputs:
+     issueTitle:
+       description: "A name for the cat-fact issue"
+       required: true
+       default: "A cat fact for you"
 
-```yaml
-name: "I have issues"
+     catFact:
+       description: "the cat fact retreived from a previous action"
+       required: true
+       default: "Mona is an Octocat"
 
-description: "consume the output of the previous action and create a new issue in the repository"
+     repoToken:
+       description: "Authentication token, use secrets.GITHUB_TOKEN"
+       required: true
 
-inputs:
-  joke:
-    description: "This will become the body of the created issue"
-  issue-title:
-    description: "Every issue needs a title, it's nice to supply one, even though you could do this dynamically within your code"
-    default: "a joke for you"
-    required: true
+   runs:
+     using: "docker"
+     image: "Dockerfile"
+   ```
 
-runs:
-  using: "node12"
-  main: "index.js"
-```
-
-</details>
+1. Commit the changes to the `action-three` branch.
+1. Click the green `Commit new file` button
