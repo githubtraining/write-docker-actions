@@ -443,9 +443,6 @@ steps:
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
 
-      ########################################################################
-      ########### Major changes ahead ##############################
-      ########################################################################
   - title: Wrapping things up
     description: Final notes before you go
     event: pull_request.closed
@@ -453,9 +450,6 @@ steps:
       - type: createIssue
         title: Last minute notes
         body: great-job.md
-      - type: respond
-        issue: Last minute notes
-        with: 16_using-ncc.md
       - type: respond
         issue: Last minute notes
         with: 16_publishing.md

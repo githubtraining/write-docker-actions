@@ -2,7 +2,7 @@
 
 You did it 🎉
 
-You have successfully written three different JavaScript actions.
+You have successfully written three different Docker actions.
 
 Let's take a quick look at all the things you learned in this course:
 
@@ -24,21 +24,17 @@ That's quite a bit for a course that doesn't cover workflows!
 - Using `inputs:` and `outputs:` allowed you to create more dynamic and reusable metadata files for your actions.
 - You've mow written the metadata for three different actions
 
-**JavaScript actions**
+**Docker actions**
 Wow, what a series of tasks! You started with the traditional `hello world` in the console, which was then expanded to use the `input:` parameters specified in the actions metadata. Through the use of that metadata you were able to be flexible with your greeting.
 
 You learned how GitHub Actions behave when consuming external APIs and you also used the response from an external API as an `output:` parameter for a later step in the workflow.
 
 Lastly you saw how to use actions to interact with a repository by creating an issue containing a joke.
 
-You used multiple packages in your action source code, you consumed `inputs:` and set `outputs:`.
+You used multiple languages to write your action source code.
 
-You learned how to use the `@actions/core` package to write errors and terminate a misbehaving action.
-
-At this point you are armed with everything you need to know to go out there and begin creating your own custom JavaScript actions.
+**At this point you are armed with everything you need to know to go out there and begin creating your own custom Docker actions.**
 
 ### We aren't done yet 😉
-
-Throughout this course I have promised to show you how to get rid of the `node_modules` folder in your repository.
 
 I also want to take a few minutes to point you to the information you need to place your own custom actions on the [GitHub Marketplace](https://github.com/marketplace?type=actions) for others to use.

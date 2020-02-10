@@ -9,6 +9,6 @@ Some notable actions you will find on the marketplace are:
 - [Jekyll action](https://github.com/marketplace/actions/jekyll-action)
 - [Run Jest](https://github.com/marketplace/actions/run-jest)
 
-And that just scratches the surface of the 1600+ and counting actions you will find on the marketplace 😄
+And that just scratches the surface of the 2000+ and counting actions you will find on the marketplace 😄
 
 📖Follow [this guide](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/publishing-actions-in-github-marketplace#publishing-an-action) to learn how to publish your actions to the GitHub Marketplace
