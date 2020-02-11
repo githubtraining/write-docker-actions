@@ -65,35 +65,40 @@ steps:
         with: 01_explain-environment.md
       - type: respond
         with: 01_explain-syntax.md
-
-  - title: Run a workflow
-    description: Wait for GitHub to run the workflow and report back the results
-    event: check_suite.completed
-    link: "{{ repoUrl }}/pull/2"
-    actions:
-      - type: gate
-        left: "%payload.check_suite.app.name%"
-        operator: ===
-        right: "GitHub Actions"
-        else:
-          - type: respond
-            issue: Initial workflow
-            with: debug.md
-            data:
-              debug: "%payload%"
-      - type: respond
-        with: 02_workflow-results.md
-        issue: Create my-workflow.yml
-        data:
-          actionsUrl: "%payload.repository.html_url%/actions"
-      - type: getPullRequest
-        pullRequest: Create my-workflow.yml
-        action_id: iwPr
       - type: respond
         with: 02_modify-workflow.md
         issue: Create my-workflow.yml
         data:
           workflowFile: "%payload.repository.html_url%/edit/%actions.iwPr.data.head.ref%/.github/workflows/my-workflow.yml"
+
+  # - title: Run a workflow
+  #   description: Wait for GitHub to run the workflow and report back the results
+  #   event: check_suite.completed
+  #   link: "{{ repoUrl }}/pull/2"
+  #   actions:
+  #     - type: gate
+  #       left: "%payload.check_suite.app.name%"
+  #       operator: ===
+  #       right: "GitHub Actions"
+  #       else:
+  #         - type: respond
+  #           issue: Initial workflow
+  #           with: debug.md
+  #           data:
+  #             debug: "%payload%"
+  #     - type: respond
+  #       with: 02_workflow-results.md
+  #       issue: Create my-workflow.yml
+  #       data:
+  #         actionsUrl: "%payload.repository.html_url%/actions"
+  #     - type: getPullRequest
+  #       pullRequest: Create my-workflow.yml
+  #       action_id: iwPr
+  #     - type: respond
+  #       with: 02_modify-workflow.md
+  #       issue: Create my-workflow.yml
+  #       data:
+  #         workflowFile: "%payload.repository.html_url%/edit/%actions.iwPr.data.head.ref%/.github/workflows/my-workflow.yml"
 
   - title: Add an Action reference
     description: Add an Action reference to the workflow file

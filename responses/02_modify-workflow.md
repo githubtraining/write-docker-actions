@@ -4,7 +4,7 @@ Currently `my-workflow.yml` is not set up correctly for our use-case. It worked 
 
 ### :keyboard: Activity: Modify my-workflow.yml to remove boilerplate steps
 
-1. [Edit]({{workflowFile}}) the `my-workflow.yml`.
+1. [Edit]({{workflowFile}}) the `.github/workflows/my-workflow.yml`.
 2. Change the `name:` property located on `line 1` of `my-workflow.yml` to `Docker Actions`
 3. Rename the job from `build` to `action`
 4. Remove the two steps that run commands, but leave the step that runs the checkout action.
