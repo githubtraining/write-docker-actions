@@ -184,6 +184,16 @@ steps:
     description: Creat a Dockerfile containing the actions source code
     event: pull_request.synchronize
     actions:
+      ####################################
+      #### Testing gates #################
+      ####################################
+      - type: getFileContents
+        filename: ".github/actions/hello-world/main.go"
+        action_id: mainGoContents
+      - type: respond
+        with: filecontents.md
+        data:
+          contents: "%actions.mainGoContents%"
       - type: respond
         with: 07_create-dockerfile.md
         data:
