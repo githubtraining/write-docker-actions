@@ -171,7 +171,8 @@ steps:
         with: 06_hello-docker-actions.md
         action_id: helloPr
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
+          quicklink: "%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/main.go"
+          # actionsUrl: "%payload.repository.html_url%/actions"
       - type: respond
         with: 05_hello-pr.md
         issue: Your first Docker action
@@ -190,6 +191,15 @@ steps:
       - type: getFileContents
         filename: ".github/actions/hello-world/main.go"
         action_id: mainGoContents
+        # get tree
+      - type: findInTree
+        path: .github/actions/hello-world/main.go
+        action_id: isInTree
+        # view contents of tree
+      - type: respond
+        with: inTree.md
+        data:
+          isInTree: "%actions.isInTree%"
       - type: gate
         left: "%actions.mainGoContents%"
         else:
@@ -200,7 +210,7 @@ steps:
       - type: gate
         left: "%actions.mainGoContents%"
         operator: ===
-        right: >-
+        right: |-
           package main
 
           import "fmt"
@@ -213,7 +223,7 @@ steps:
             with: wrong-content.md
             data:
               filename: ".github/actions/hello-world/main.go"
-              correctContent: >-
+              correctContent: |-
                 package main
 
                 import "fmt"
