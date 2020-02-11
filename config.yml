@@ -209,7 +209,7 @@ steps:
           - type: respond
             with: e-no-file.md
             data:
-              haveFile: "%actions.fileLocation%"
+              haveFile: "%actions.fileLocation.data%"
               needFile: ".github/actions/hello-world.go"
 
       - type: getFileContents
