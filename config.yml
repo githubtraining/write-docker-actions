@@ -69,7 +69,7 @@ steps:
         with: 02_modify-workflow.md
         issue: Create my-workflow.yml
         data:
-          workflowFile: "%payload.repository.html_url%/edit/%actions.iwPr.data.head.ref%/.github/workflows/my-workflow.yml"
+          workflowFile: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml"
 
   # - title: Run a workflow
   #   description: Wait for GitHub to run the workflow and report back the results
