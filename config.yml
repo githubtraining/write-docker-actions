@@ -210,7 +210,7 @@ steps:
             with: e-no-file.md
             data:
               # haveFile: "%actions.fileLocation.data%"
-              needFile: ".github/actions/hello-world.go"
+              needFile: ".github/actions/hello-world/main.go"
 
       - type: getFileContents
         filename: ".github/actions/hello-world/main.go"
@@ -246,10 +246,7 @@ steps:
                 func main() {
                 fmt.Println("Hello Docker Actions")
                 }
-      # - type: respond
-      #   with: filecontents.md
-      #   data:
-      #     contents: "%actions.mainGoContents%"
+
       - type: respond
         with: 07_create-dockerfile.md
         data:
