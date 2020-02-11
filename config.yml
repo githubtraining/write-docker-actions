@@ -201,15 +201,15 @@ steps:
         right: path:hello-world/main.go
         else:
           # if file isn't where expected find true location
-          - type: findInTree
-            path: main.go
-            multiple: true
-            action_id: fileLocation
+          # - type: findInTree
+          #   path: main.go
+          #   multiple: true
+          #   action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-no-file.md
             data:
-              haveFile: "%actions.fileLocation.data%"
+              # haveFile: "%actions.fileLocation.data%"
               needFile: ".github/actions/hello-world.go"
 
       - type: getFileContents
