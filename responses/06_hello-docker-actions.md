@@ -7,7 +7,7 @@ If you are not familiar with Go programming that's perfectly okay, you are here 
 The first iteration of our action will follow the traditional path of logging "Hello World" 👋to the console. We will expand on this as we move forward, for now it's a good test to make sure all of our files are set up correctly 😄
 
 1. Create and add the following contents to the `.github/actions/hello-world/main.go` file:
-   You can use this [link]{{quicklink}} to easily create this file
+   You can use this [link]({{quicklink}}) to easily create this file
 
    ```go
    package main

@@ -171,7 +171,7 @@ steps:
         with: 06_hello-docker-actions.md
         action_id: helloPr
         data:
-          quicklink: "%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/main.go"
+          quicklink: "%payload.repository.html_url%/new/hello-world?filename=.github/actions/hello-world/main.go"
           # actionsUrl: "%payload.repository.html_url%/actions"
       - type: respond
         with: 05_hello-pr.md
@@ -188,18 +188,33 @@ steps:
       ####################################
       #### Testing gates #################
       ####################################
+
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: path:hello-world/main.go
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: main.go
+            multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-no-file.md
+            data:
+              haveFile: "%actions.fileLocation%"
+              needFile: ".github/actions/hello-world.go"
+
       - type: getFileContents
         filename: ".github/actions/hello-world/main.go"
         action_id: mainGoContents
-        # get tree
-      - type: findInTree
-        path: .github/actions/hello-world/main.go
-        action_id: isInTree
-        # view contents of tree
-      - type: respond
-        with: inTree.md
-        data:
-          isInTree: "%actions.isInTree%"
       - type: gate
         left: "%actions.mainGoContents%"
         else:
