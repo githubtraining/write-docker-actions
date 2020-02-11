@@ -190,10 +190,41 @@ steps:
       - type: getFileContents
         filename: ".github/actions/hello-world/main.go"
         action_id: mainGoContents
-      - type: respond
-        with: filecontents.md
-        data:
-          contents: "%actions.mainGoContents%"
+      - type: gate
+        left: "%actions.mainGoContents%"
+        else:
+          - type: respond
+            with: e-404.md
+            data:
+              need: ".github/actions/hello-world/main.go"
+      - type: gate
+        left: "%actions.mainGoContents%"
+        operator: ===
+        right: >-
+          package main
+
+          import "fmt"
+
+          func main() {
+          fmt.Println("Hello Docker Actions")
+          }
+        else:
+          - type: respond
+            with: wrong-content.md
+            data:
+              filename: ".github/actions/hello-world/main.go"
+              correctContent: >-
+                package main
+
+                import "fmt"
+
+                func main() {
+                fmt.Println("Hello Docker Actions")
+                }
+      # - type: respond
+      #   with: filecontents.md
+      #   data:
+      #     contents: "%actions.mainGoContents%"
       - type: respond
         with: 07_create-dockerfile.md
         data:
