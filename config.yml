@@ -197,19 +197,20 @@ steps:
       # check for a file in a tree
       - type: gate
         left: "%actions.isInTree.data.tree%"
-        operator: includes
-        right: path:hello-world/main.go
+        operator: ===
+        right: path:.github/actions/hello-world/main.go
         else:
           # if file isn't where expected find true location
-          # - type: findInTree
-          #   path: main.go
-          #   multiple: true
-          #   action_id: fileLocation
+          - type: findInTree
+            path: main.go
+            tree: "%actions.isInTree.data.tree%"
+            multiple: true
+            action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-no-file.md
             data:
-              # haveFile: "%actions.fileLocation.data%"
+              haveFile: "%actions.fileLocation.path%"
               needFile: ".github/actions/hello-world/main.go"
 
       - type: getFileContents
