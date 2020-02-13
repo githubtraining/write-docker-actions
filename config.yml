@@ -204,7 +204,7 @@ steps:
           - type: findInTree
             path: main.go
             tree: "%actions.isInTree.data.tree%"
-            multiple: true
+            # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
@@ -248,7 +248,6 @@ steps:
                 func main() {
                     fmt.Println("Hello Docker Actions")
                 }
-
       - type: respond
         with: 07_create-dockerfile.md
         data:
