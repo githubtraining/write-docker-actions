@@ -210,7 +210,7 @@ steps:
           - type: respond
             with: e-no-file.md
             data:
-              haveFile: "%actions.fileLocation%"
+              haveFile: "%actions.fileLocation.path%"
               needFile: ".github/actions/hello-world/main.go"
 
       - type: getFileContents
@@ -232,7 +232,7 @@ steps:
           import "fmt"
 
           func main() {
-          fmt.Println("Hello Docker Actions")
+            fmt.Println("Hello Docker Actions")
           }
         else:
           - type: respond
@@ -245,7 +245,7 @@ steps:
                 import "fmt"
 
                 func main() {
-                fmt.Println("Hello Docker Actions")
+                  fmt.Println("Hello Docker Actions")
                 }
 
       - type: respond
