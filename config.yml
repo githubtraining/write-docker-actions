@@ -198,7 +198,7 @@ steps:
       - type: gate
         left: "%actions.isInTree.data.tree%"
         operator: includes
-        right: path:.github/actions/hello-world/main.go
+        right: "path:.github/actions/hello-world/main.go"
         else:
           # if file isn't where expected find true location
           - type: findInTree
