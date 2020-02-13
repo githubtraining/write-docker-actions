@@ -232,20 +232,21 @@ steps:
           import "fmt"
 
           func main() {
-            fmt.Println("Hello Docker Actions")
+              fmt.Println("Hello Docker Actions")
           }
         else:
           - type: respond
             with: wrong-content.md
             data:
               filename: ".github/actions/hello-world/main.go"
+              haveContent: "%actions.mainGoContents%"
               correctContent: |-
                 package main
 
                 import "fmt"
 
                 func main() {
-                  fmt.Println("Hello Docker Actions")
+                    fmt.Println("Hello Docker Actions")
                 }
 
       - type: respond
