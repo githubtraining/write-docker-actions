@@ -52,16 +52,3 @@ Let's take a second to talk about each of the pieces that we see here:
 
 📖Take a deeper dive into [workflow components](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-workflows)
 📖Read more about [configuring workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-workflows)
-
-<details><summary>Has Learning Lab stopped responding?  Your Actions workflow might be failing. Click here for troubleshooting help.</summary>
-
-When a GitHub Actions workflow is running, you should see some checks in progress, like the screenshot below.
-
-![Checks in progress box](https://i.imgur.com/uO6iqYd.png)
-
-If the checks don't appear or if the checks are stuck in progress, there's a few things you can do to try and trigger them:
-
-- Refresh the page, it's possible the workflow ran and the page just hasn't been updated with that change
-- Try making a commit on this branch. Our workflow is triggered with a `push` event, and committing to this branch will result in a new `push`
-- Edit the workflow file on GitHub and ensure there are no red lines indicating a syntax problem
-  </details>

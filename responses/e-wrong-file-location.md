@@ -9,4 +9,4 @@ and it should be located here:
 `{{needFile}}`
 
 **Solution**
-Click [here]({{editLInk}}) to edit {{fileName}} and move it to the proper directory
+Click [here]({{editLink}}) to edit `{{fileName}}` and move it to the proper directory

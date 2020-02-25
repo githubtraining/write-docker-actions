@@ -24,7 +24,3 @@ We will start with using the parameters that are **required** and later implemen
 1. Commit the changes to a new branch named `hello-world`
 1. Create a pull request titled **Create action.yml**.
 1. Supply the pull request body content and click `Create pull request`.
-
----
-
-I'll respond in your new pull request when I notice you have completed these steps
