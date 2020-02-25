@@ -7,6 +7,7 @@ Now that we know what input parameters are, let's edit the metadata for our **he
 💡All of the following steps take place inside of the `.github/actions/hello-world` directory.
 
 1. Add the following contents to the `.github/actions/hello-world/action.yml` file:
+   You can use [this link]({{quicklink}}) to easily edit this file.
 
    ```yaml
    name: "my hello action"

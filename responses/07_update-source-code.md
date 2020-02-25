@@ -7,6 +7,7 @@ Great job 👍 next let's update our source code to consume the inputs that are 
 💡All of the following steps take place inside of the `.github/actions/hello-world` directory.
 
 1. Add the following contents to the `.github/actions/hello-world/main.go` file:
+   You can use [this link]({{quicklink}}) to easily edit this file.
 
    ```go
    package main

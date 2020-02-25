@@ -66,39 +66,12 @@ steps:
       - type: respond
         with: 01_explain-syntax.md
       - type: respond
+        with: 02_explain-steps.md
+      - type: respond
         with: 02_modify-workflow.md
         issue: Create my-workflow.yml
         data:
           workflowFile: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml"
-
-  # - title: Run a workflow
-  #   description: Wait for GitHub to run the workflow and report back the results
-  #   event: check_suite.completed
-  #   link: "{{ repoUrl }}/pull/2"
-  #   actions:
-  #     - type: gate
-  #       left: "%payload.check_suite.app.name%"
-  #       operator: ===
-  #       right: "GitHub Actions"
-  #       else:
-  #         - type: respond
-  #           issue: Initial workflow
-  #           with: debug.md
-  #           data:
-  #             debug: "%payload%"
-  #     - type: respond
-  #       with: 02_workflow-results.md
-  #       issue: Create my-workflow.yml
-  #       data:
-  #         actionsUrl: "%payload.repository.html_url%/actions"
-  #     - type: getPullRequest
-  #       pullRequest: Create my-workflow.yml
-  #       action_id: iwPr
-  #     - type: respond
-  #       with: 02_modify-workflow.md
-  #       issue: Create my-workflow.yml
-  #       data:
-  #         workflowFile: "%payload.repository.html_url%/edit/%actions.iwPr.data.head.ref%/.github/workflows/my-workflow.yml"
 
   - title: Add an Action reference
     description: Add an Action reference to the workflow file
@@ -154,7 +127,7 @@ steps:
           - left: "%payload.action%"
             operator: ===
             right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
+            # AND the pull request title equals 'Create action.yml'
       - type: gate
         left: "%payload.pull_request.title%"
         operator: ===
@@ -165,8 +138,37 @@ steps:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Create my-workflow.yml
+              title: Create action.yml
           # if those gates === true Then do this stuff
+          ###############################################
+          # Validate the filepath for the main.go file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/hello-world/action.yml"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: action.yml
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/hello-world/action.yml"
+              editLink: "%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%"
+              fileName: action.yml
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 06_hello-docker-actions.md
         action_id: helloPr
@@ -185,10 +187,8 @@ steps:
     description: Creat a Dockerfile containing the actions source code
     event: pull_request.synchronize
     actions:
-      ####################################
-      #### Testing gates #################
-      ####################################
-
+      #######################################################
+      # Validate the filepath for the main.go file
       # get tree
       - type: getTree
         action_id: isInTree
@@ -208,55 +208,53 @@ steps:
             action_id: fileLocation
           # help user with proper file location
           - type: respond
-            with: e-no-file.md
+            with: e-wrong-file-location.md
             data:
               haveFile: "%actions.fileLocation.path%"
               needFile: ".github/actions/hello-world/main.go"
-
-      # - type: getFileContents
-      #   filename: ".github/actions/hello-world/main.go"
-      #   action_id: mainGoContents
-      # - type: gate
-      #   left: "%actions.mainGoContents%"
-      #   else:
-      #     - type: respond
-      #       with: e-404.md
-      #       data:
-      #         need: ".github/actions/hello-world/main.go"
-      # - type: gate
-      #   left: "%actions.mainGoContents%"
-      #   operator: ===
-      #   right: |-
-      #     package main
-
-      #     import "fmt"
-
-      #     func main() {
-      #         fmt.Println("Hello Docker Actions")
-      #     }
-      #   else:
-      #     - type: respond
-      #       with: wrong-content.md
-      #       data:
-      #         filename: ".github/actions/hello-world/main.go"
-      #         haveContent: "%actions.mainGoContents%"
-      #         correctContent: |-
-      #           package main
-
-      #           import "fmt"
-
-      #           func main() {
-      #               fmt.Println("Hello Docker Actions")
-      #           }
+              editLink: "%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%"
+              fileName: main.go
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 07_create-dockerfile.md
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
+          quicklink: "%payload.repository.html_url%/new/hello-world?filename=.github/actions/hello-world/Dockerfile"
 
   - title: Adding input parameters to metadata
     description: extend your action to accept input parameters
     event: pull_request.synchronize
     actions:
+      #######################################################
+      # Validate the filepath for the main.go file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/hello-world/Dockerfile"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: Dockerfile
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/hello-world/Dockerfile"
+              editLink: "%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%"
+              fileName: Dockerfile
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 07_hello-result.md
         data:
@@ -266,6 +264,8 @@ steps:
         with: 07_add-input-params.md
       - type: respond
         with: 07_update-metadata.md
+        data:
+          quicklink: "%payload.repository.html_url%/edit/.github/actions/hello-world/action.yml"
 
   - title: Adding input parameters to source code files
     description: extend your action to accept input parameters
@@ -273,6 +273,8 @@ steps:
     actions:
       - type: respond
         with: 07_update-source-code.md
+        data:
+          quicklink: "%payload.repository.html_url%/edit/.github/actions/hello-world/main.go"
 
   - title: Using input parameters in the workflow
     description: Assign values to the newly created input parameters
@@ -280,6 +282,8 @@ steps:
     actions:
       - type: respond
         with: 07_update-workflow.md
+        data:
+          quicklink: "%payload.repository.html_url%/edit/.github/workflows/my-workflow.yml"
 
   - title: Exploring your input parameters
     description: view the results of adding input parameter

@@ -7,6 +7,7 @@ The last piece to this actions puzzle is to edit the workflow file so that we ca
 💡All of the following steps take place inside of the `.github/workflows` directory.
 
 1. Add the following contents to the `.github/workflows/my-workflow.yml` file:
+   You can use [this link]({{quicklink}}) to easily edit this file.
 
    ```yaml
    name: "Docker Actions"
