@@ -145,35 +145,7 @@ steps:
             data:
               title: Create action.yml
           # if those gates === true Then do this stuff
-      ###############################################
-      # Validate the filepath for the action.yml file
-      # get tree
-      # - type: getTree
-      #   action_id: isInTree
-      #   recursive: true
-      #   sha: "%payload.pull_request.head.sha%"
-      # # check for a file in a tree
-      # - type: gate
-      #   left: "%actions.isInTree.data.tree%"
-      #   operator: includes
-      #   right: "path:.github/actions/hello-world/action.yml"
-      #   else:
-      #     # if file isn't where expected find true location
-      #     - type: findInTree
-      #       path: action.yml
-      #       tree: "%actions.isInTree.data.tree%"
-      #       # multiple: true
-      #       action_id: fileLocation
-      #     # help user with proper file location
-      #     - type: respond
-      #       with: e-wrong-file-location.md
-      #       data:
-      #         haveFile: "%actions.fileLocation.path%"
-      #         needFile: ".github/actions/hello-world/action.yml"
-      #         editLink: "%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%"
-      #         fileName: action.yml
-      # End filepath verification
-      #######################################################
+
       - type: respond
         with: 06_hello-docker-actions.md
         action_id: helloPr
@@ -789,16 +761,4 @@ steps:
       - type: respond
         issue: "%actions.allDone.data.number%"
         with: 16_complete.md
-  # - title: Wrapping things up
-  #   description: Final notes before you go
-  #   event: pull_request.closed
-  #   actions:
-  # - type: createIssue
-  #   title: Last minute notes
-  #   body: great-job.md
-  # - type: respond
-  #   issue: Last minute notes
-  #   with: 16_publishing.md
-  # - type: respond
-  #   issue: Last minute notes
-  #   with: 16_complete.md
+      - type: mergePullRequest
