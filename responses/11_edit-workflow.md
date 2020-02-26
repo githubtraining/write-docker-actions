@@ -10,37 +10,31 @@ We will use the `pull_request` event and specify the activity type to be when an
 
 Let's change the tigger and add the cat fact action
 
-1. [Edit]({{workflowFile}}) your current workflow file
-2. Uncomment the contents of the file
-3. Change the `on:` property to reflect the `pull_request labeled` [event](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#webhook-events)
-4. Add a new `step:` that has a `name:` of **meow** and`uses:` your new `cat-facts` action
-5. Commit the changes to the `action-two` branch
+1. [Edit]({{workflowFile}}) your current workflow file. It should have the following contents:
 
-I'll respond once you commit your changes
+   ```yaml
+   name: Docker Actions
+
+   on:
+     pull_request:
+       types: [labeled]
+
+   jobs:
+     action:
+       runs-on: ubuntu-latest
+
+       steps:
+         - uses: actions/checkout@v1
+
+         - name: hello-action
+           uses: ./.github/actions/hello-world
+
+         - name: meow
+           uses: ./.github/actions/cat-facts
+   ```
+
+1. Commit the changes to the `action-two` branch
 
 ---
 
-<details><summary>The complete workflow can be viewed by clicking here</summary>
-
-```yaml
-name: Docker Actions
-
-on:
-  pull_request:
-    types: [labeled]
-
-jobs:
-  action:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: hello-action
-        uses: ./.github/actions/hello-world
-
-      - name: meow
-        uses: ./.github/actions/cat-facts
-```
-
-</details>
+I'll respond once you commit your changes

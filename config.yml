@@ -500,7 +500,7 @@ steps:
         operator: ===
         right: External APIs
       #######################################################
-      # Validate the filepath for the requirements.txt file
+      # Validate the filepath for the Dockerfile file
       # get tree
       - type: getTree
         action_id: isInTree
@@ -774,21 +774,31 @@ steps:
         # End filepath verification
         #######################################################
       - type: removeBranchProtection
+      - type: createIssue
+        title: Last minute notes
+        body: great-job.md
+        action_id: allDone
       - type: respond
         with: 15_add-a-label.md
         data:
           actionsUrl: "%payload.repository.html_url%/actions"
-
-  - title: Wrapping things up
-    description: Final notes before you go
-    event: pull_request.closed
-    actions:
-      - type: createIssue
-        title: Last minute notes
-        body: great-job.md
+          issueUrl: "%actions.allDone.data.html_url%"
       - type: respond
-        issue: Last minute notes
+        issue: "%actions.allDone.data.number%"
         with: 16_publishing.md
       - type: respond
-        issue: Last minute notes
+        issue: "%actions.allDone.data.number%"
         with: 16_complete.md
+  # - title: Wrapping things up
+  #   description: Final notes before you go
+  #   event: pull_request.closed
+  #   actions:
+  # - type: createIssue
+  #   title: Last minute notes
+  #   body: great-job.md
+  # - type: respond
+  #   issue: Last minute notes
+  #   with: 16_publishing.md
+  # - type: respond
+  #   issue: Last minute notes
+  #   with: 16_complete.md

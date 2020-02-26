@@ -63,8 +63,6 @@ We need to make some edits to the `my-workflow.yml` file to get it configured to
 1. Commit the changes to a new branch and name it `action-three`.
 1. Create a pull request named **Use Outputs**
 
-Like our other actions, I'll respond in the new pull request when I detect it has been opened.
-
 ---
 
 I will respond once you have finished.
