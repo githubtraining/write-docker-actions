@@ -36,6 +36,7 @@ If Python is a new programming language to you, like always don't worry. You are
 ### :keyboard: Activity: Creating the Python source code for your new action.
 
 1. Create and add the following contents to the `.github/actions/cat-facts/src/main.py` file:
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```python
    import requests

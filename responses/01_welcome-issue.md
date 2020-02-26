@@ -14,6 +14,6 @@ _In our case, we will use this one **workflow** file for many things, which lead
 
 ---
 
-💻 Actively learn about workflows by enrolling in [this Learning Lab course which has no name or content yet]()
+<!-- 💻 Actively learn about workflows by enrolling in [this Learning Lab course which has no name or content yet]() -->
 
 📖 Read more about [workflows](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#choosing-the-type-of-actions-for-your-workflow)

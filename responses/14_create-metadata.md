@@ -32,6 +32,7 @@ Our action will also need to accept an input so that we can let the user specify
 💡All of the following steps take place inside of the `.github/actions/issue-maker` directory.
 
 1. Create and add the following contents to the `.github/actions/issue-maker/action.yml` file:
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```yml
    name: "issue maker"

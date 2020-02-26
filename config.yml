@@ -59,7 +59,7 @@ steps:
         issue: Start here!
         with: new-pull-request.md
         data:
-          pullUrl: "%payload.pull_request.url%"
+          pullUrl: "%payload.pull_request.html_url%"
       - type: closeIssue
         issue: Start here!
       - type: respond
@@ -270,7 +270,7 @@ steps:
       - type: respond
         with: 07_update-metadata.md
         data:
-          quicklink: "%payload.repository.html_url%/edit/.github/actions/hello-world/action.yml"
+          quicklink: "%payload.repository.html_url%/edit/hello-world/.github/actions/hello-world/action.yml"
 
   - title: Adding input parameters to source code files
     description: extend your action to accept input parameters
@@ -279,7 +279,7 @@ steps:
       - type: respond
         with: 07_update-source-code.md
         data:
-          quicklink: "%payload.repository.html_url%/edit/.github/actions/hello-world/main.go"
+          quicklink: "%payload.repository.html_url%/edit/hello-world/.github/actions/hello-world/main.go"
 
   - title: Using input parameters in the workflow
     description: Assign values to the newly created input parameters
@@ -288,7 +288,7 @@ steps:
       - type: respond
         with: 07_update-workflow.md
         data:
-          quicklink: "%payload.repository.html_url%/edit/.github/workflows/my-workflow.yml"
+          quicklink: "%payload.repository.html_url%/edit/hello-world/.github/workflows/my-workflow.yml"
 
   - title: Exploring your input parameters
     description: view the results of adding input parameter
@@ -315,7 +315,7 @@ steps:
           actionsUrl: "%payload.repository.html_url%/actions"
       - type: respond
         with: 08_next-steps.md
-        issue: Hello Action
+        issue: Create action.yml
         data:
           issueUrl: "%actions.catFact.data.html_url%"
       - type: respond
@@ -357,11 +357,13 @@ steps:
         issue: Kittens everywhere
         with: new-pull-request.md
         data:
-          pullUrl: "%payload.pull_request.url%"
+          pullUrl: "%payload.pull_request.html_url%"
       - type: closeIssue
         issue: Kittens everywhere
       - type: respond
         with: 10_create-metadata.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/action.yml"
 
   - title: Create your action's source code files
     description: Add main.py to your Action
@@ -372,7 +374,7 @@ steps:
         operator: ===
         right: External APIs
       #######################################################
-      # Validate the filepath for the main.go file
+      # Validate the filepath for the action.yml file
       # get tree
       - type: getTree
         action_id: isInTree
@@ -402,6 +404,8 @@ steps:
         #######################################################
       - type: respond
         with: 10_create-python-file.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/src/main.py"
 
   - title: Add Python dependencies
     description: Add the requirements.txt file
@@ -411,8 +415,39 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: External APIs
+      #######################################################
+      # Validate the filepath for the main.py file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/cat-facts/src/main.py"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: main.py
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/cat-facts/src/main.py"
+              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              fileName: main.py
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 10_create-requirements.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/requirements.txt"
 
   - title: Create the Dockerfile for the action
     description: Add the Dockerfile to the action
@@ -422,8 +457,39 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: External APIs
+      #######################################################
+      # Validate the filepath for the requirements.txt file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/cat-facts/requirements.txt"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: requirements.txt
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/cat-facts/requirements.txt"
+              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              fileName: requirements.txt
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 10_create-dockerfile.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/Dockerfile"
 
   - title: Use the cat fact action in a workflow
     description: Edit the workflow file to now use the newly created cat fact action
@@ -433,6 +499,35 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: External APIs
+      #######################################################
+      # Validate the filepath for the requirements.txt file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/cat-facts/Dockerfile"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: Dockerfile
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/cat-facts/Dockerfile"
+              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              fileName: Dockerfile
+        # End filepath verification
+        #######################################################
       - type: getPullRequest
         pullRequest: External APIs
         action_id: apiPr
@@ -499,10 +594,17 @@ steps:
             data:
               title: Use Outputs
           # if those gates === true Then do this stuff
+      - type: respond
+        issue: Consuming Action Outputs
+        with: new-pull-request.md
+        data:
+          pullUrl: "%payload.pull_request.html_url%"
       - type: closeIssue
         issue: Consuming Action Outputs
       - type: respond
         with: 14_action-three.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/package.json"
 
   - title: Add third Actions metadata
     description: Create the metadata for the third Action
@@ -513,8 +615,39 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: Use Outputs
+      #######################################################
+      # Validate the filepath for the requirements.txt file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/issue-maker/package.json"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: package.json
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/issue-maker/package.json"
+              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              fileName: package.json
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 14_create-metadata.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/action.yml"
 
   - title: Add third Actions JavaScript files
     description: Create the JavaScript files for the third Action
@@ -525,8 +658,39 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: Use Outputs
+      #######################################################
+      # Validate the filepath for the action.yml file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/issue-maker/action.yml"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: action.yml
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/issue-maker/action.yml"
+              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              fileName: action.yml
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 14_create-js-files.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/src/index.js"
 
   - title: Create the final actions Dockerfile
     description: Add a pull request label to trigger the workflow
@@ -537,8 +701,39 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: Use Outputs
+      #######################################################
+      # Validate the filepath for the action.yml file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/issue-maker/src/index.js"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: index.js
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/issue-maker/src/index.js"
+              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              fileName: index.js
+        # End filepath verification
+        #######################################################
       - type: respond
         with: 14_create-dockerfile.md
+        data:
+          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/Dockerfile"
 
   - title: Trigger the third Action
     description: Add a pull request label to trigger the workflow
@@ -549,6 +744,35 @@ steps:
         left: "%payload.pull_request.title%"
         operator: ===
         right: Use Outputs
+      #######################################################
+      # Validate the filepath for the action.yml file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:.github/actions/issue-maker/Dockerfile"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: Dockerfile
+            tree: "%actions.isInTree.data.tree%"
+            # multiple: true
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: ".github/actions/issue-maker/Dockerfile"
+              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              fileName: Dockerfile
+        # End filepath verification
+        #######################################################
       - type: removeBranchProtection
       - type: respond
         with: 15_add-a-label.md

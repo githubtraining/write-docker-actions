@@ -1,3 +1,0 @@
-response from findInTree
-
-{{isInTree}}

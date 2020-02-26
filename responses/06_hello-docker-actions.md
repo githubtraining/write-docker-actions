@@ -9,7 +9,7 @@ The first iteration of our action will follow the traditional path of logging "H
 1. Create and add the following contents to the `.github/actions/hello-world/main.go` file:
    You can use [this link]({{quicklink}}) to easily create this file in the proper location.
 
-   ```go
+   ```golang
    package main
 
    import "fmt"

@@ -2,14 +2,16 @@
 
 Awesome 🎉
 
-This action now has two of the three key files it needs to run:
+This action now has three of the four key files it needs to run:
 
 - Source-code
 - Metadata
+- Requirements.txt
 
 Lastly we will create the `Dockerfile`, just like we did with our first action.
 
 1. Create and add the following contents to the `.github/actions/cat-facts/Dockerfile` file:
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```dockerfile
    FROM python:3

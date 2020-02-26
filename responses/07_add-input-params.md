@@ -14,6 +14,8 @@ To add inputs we need to add the `inputs:` parameter to the `action.yml` file. T
 | `required:`    | Boolean value indicating if the input parameter is required or not | False (Default value is True) |
 | `default:`     | String representing a default value for the input parameter        | False                         |
 
+---
+
 Let's take a look at how this fits into an `action.yml` file.
 
 **action.yml**
@@ -40,6 +42,8 @@ inputs:
 ```
 
 _The placement of your `inputs:` is not strictly enforced, however it has become commonplace to ensure the `runs:` statement is defined after your `inputs:` and `outputs:` in your `action.yml` file._
+
+---
 
 ## So what is actually happening here?
 
@@ -74,9 +78,11 @@ jobs:
 
 Now that there are inputs in the action's metadata the **user** can interface with them by supplying values. In this case **Learning Lab User** was passed as the value for the `firstGreeting` input which overrides the **default** value, specified in the `action.yml`, of **Hubot**
 
+---
+
 **main.go**
 
-```go
+```golang
 package main
 
 import (

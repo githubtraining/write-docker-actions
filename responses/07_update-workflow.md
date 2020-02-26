@@ -15,15 +15,15 @@ The last piece to this actions puzzle is to edit the workflow file so that we ca
    on: [push]
 
    jobs:
-   action:
-     runs-on: "ubuntu-latest"
-     steps:
-       - uses: actions/checkout@v1
+     action:
+       runs-on: "ubuntu-latest"
+       steps:
+         - uses: actions/checkout@v1
 
-       - name: "hello-action"
-         uses: ./.github/actions/hello-world
-         with:
-           firstGreeting: "Learning Lab User"
+         - name: "hello-action"
+           uses: ./.github/actions/hello-world
+           with:
+             firstGreeting: "Learning Lab User"
    ```
 
 1. Commit the changes to the `hello-world` branch

@@ -9,7 +9,7 @@ Now that we know what action metadata is, let's create the metadata for our **he
 We will start with using the parameters that are **required** and later implement some optional parameters as our action knowledge grows.
 
 1. Create and add the following contents to the `.github/actions/hello-world/action.yml` file:
-   You can use this [link]({{quicklink}}) to easily create this file
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```yaml
    name: "my hello action"

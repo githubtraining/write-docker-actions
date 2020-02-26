@@ -3,6 +3,7 @@
 💡All of the following steps take place inside of the `.github/actions/issue-maker/src` directory.
 
 1. Create and add the following contents to the `.github/actions/issue-maker/src/index.js` file:
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```javascript
    const core = require("@actions/core");

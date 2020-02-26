@@ -7,6 +7,7 @@ Our action does not require much metadata for it to run correctly. We will not b
 We will not use the `fact` in in this portion of the course. There will be a later step that will rely on this actions output.
 
 1. Create and add the following contents to the `.github/actions/cat-facts/action.yml` file:
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```yaml
    name: "my cat fact action"

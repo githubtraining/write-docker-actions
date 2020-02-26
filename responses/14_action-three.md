@@ -7,6 +7,7 @@ This time we will start with the dependencies for our action. JavaScript project
 ### :keyboard: Activity: Add the package.json file
 
 1. Create and add the following contents to the `.github/actions/issue-maker/package.json` file:
+   You can use [this link]({{quicklink}}) to easily create this file.
 
    ```json
    {
