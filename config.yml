@@ -761,4 +761,3 @@ steps:
       - type: respond
         issue: "%actions.allDone.data.number%"
         with: 16_complete.md
-      - type: mergePullRequest
