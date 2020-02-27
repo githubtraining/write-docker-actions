@@ -13,12 +13,12 @@ Lastly we will create the `Dockerfile`. Like Go programming, it is perfectly oka
    You can use [this link]({{quicklink}}) to easily create this file in the proper location.
 
    ```dockerfile
-    FROM golang:latest
-    WORKDIR /go/src/hello
-    COPY . .
-    RUN go get -d -v ./...
-    RUN go install -v ./...
-    CMD ["hello"]
+   FROM golang:latest
+   WORKDIR /go/src/hello
+   COPY . .
+   RUN go get -d -v ./...
+   RUN go install -v ./...
+   CMD ["hello"]
    ```
 
 2. Commit the changes to the existing `hello-world` branch
