@@ -1,7 +1,6 @@
-title: "GitHub Actions: Writing Docker Actions"
-tagline: Create custom automation tasks for your unique workflow using GitHub Actions
+title: "GitHub Actions: Write Docker container actions"
 description: >-
-  Learn how to write your own GitHub Docker Action!  This course will
+  Learn how to write your own GitHub Docker container action!  This course will
   empower you to begin automating customized tasks unique to your workflow.
 template:
   repo: "write-docker-actions-template"
