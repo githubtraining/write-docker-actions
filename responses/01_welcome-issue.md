@@ -2,11 +2,11 @@
 
 Hello @{{user.login}}, I'm so excited to teach you how to create your own custom Docker based action 😄
 
-Actions are enabled on your repository by default, but we still have to tell our repository to use them. We do this by creating a workflow file in our repository.
+GitHub Actions are enabled on your repository by default, but we still have to tell our repository to use them. We do this by creating a workflow file in our repository.
 
 #### What is a workflow file?
 
-A **workflow** file can be thought of as the recipe for automating a task. They house the start to finish instructions, in the form of `jobs` and `steps`, for what should happen based on specific triggers.
+A **workflow** file can be thought of as the recipe for automating a task. They house the start-to-finish instructions, in the form of `jobs` and `steps`, for what should happen based on specific triggers.
 
 Your repository can contain multiple **workflow** files that carry out a wide variety of tasks. It is important to consider this when deciding on a name for your **workflow**. The name you choose should reflect the tasks being performed.
 

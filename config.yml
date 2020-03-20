@@ -5,6 +5,15 @@ description: >-
 template:
   repo: 'write-docker-actions-template'
   name: 'write-docker-actions'
+
+# Repo artifacts
+# 1. (Issue) Start here!
+# 2. (PR) Create my-workflow.yml (should be 'Create my first workflow')
+# 3. (Issue) Your first Docker action (should be Docker based)
+# 4. (PR) Create action.yml (Add a Hello World action)
+# 5. (Issue) Kittens everywhere
+# 6. (PR) External APIs
+
 before:
   - type: updateBranchProtection
   - type: createLabel
@@ -108,6 +117,8 @@ steps:
       - type: respond
         with: 05_explain-actions.md
         issue: Your first Docker action
+        data:
+          actionsUrl: '%payload.repository.html_url%/actions/new'
       - type: respond
         with: 05_explain-metadata.md
         issue: Your first Docker action
@@ -149,7 +160,7 @@ steps:
         with: 06_hello-docker-actions.md
         action_id: helloPr
         data:
-          quicklink: '%payload.repository.html_url%/new/hello-world?filename=.github/actions/hello-world/main.go'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/hello-world/main.go'
           # actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 05_hello-pr.md
@@ -196,7 +207,7 @@ steps:
         with: 07_create-dockerfile.md
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
-          quicklink: '%payload.repository.html_url%/new/hello-world?filename=.github/actions/hello-world/Dockerfile'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/hello-world/Dockerfile'
 
   - title: Adding input parameters to metadata
     description: extend your action to accept input parameters
@@ -241,7 +252,7 @@ steps:
       - type: respond
         with: 07_update-metadata.md
         data:
-          quicklink: '%payload.repository.html_url%/edit/hello-world/.github/actions/hello-world/action.yml'
+          quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/actions/hello-world/action.yml'
 
   - title: Adding input parameters to source code files
     description: extend your action to accept input parameters
@@ -250,7 +261,7 @@ steps:
       - type: respond
         with: 07_update-source-code.md
         data:
-          quicklink: '%payload.repository.html_url%/edit/hello-world/.github/actions/hello-world/main.go'
+          quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/actions/hello-world/main.go'
 
   - title: Using input parameters in the workflow
     description: Assign values to the newly created input parameters
@@ -259,7 +270,7 @@ steps:
       - type: respond
         with: 07_update-workflow.md
         data:
-          quicklink: '%payload.repository.html_url%/edit/hello-world/.github/workflows/my-workflow.yml'
+          quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
   - title: Exploring your input parameters
     description: view the results of adding input parameter
@@ -334,7 +345,7 @@ steps:
       - type: respond
         with: 10_create-metadata.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/action.yml'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/action.yml'
 
   - title: Create your action's source code files
     description: Add main.py to your Action

@@ -11,7 +11,7 @@ To add inputs we need to add the `inputs:` parameter to the `action.yml` file. T
 | Parameter      | Description                                                        | Required                      |
 | -------------- | ------------------------------------------------------------------ | ----------------------------- |
 | `description:` | String describing the purpose of the input                         | True                          |
-| `required:`    | Boolean value indicating if the input parameter is required or not | False (Default value is True) |
+| `required:`    | Boolean value indicating if the input parameter is required or not.  (Default value is True) | False |
 | `default:`     | String representing a default value for the input parameter        | False                         |
 
 ---
