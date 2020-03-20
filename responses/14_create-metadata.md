@@ -1,4 +1,4 @@
-## Create the third actions action.yml file
+## Create the third actions `action.yml` file
 
 Like our "hello world" action, this action will require at least one `input:` parameter. We need this parameter so that our JavaScript for this action has access to the `output:` from the joke action.
 

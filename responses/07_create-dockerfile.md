@@ -28,4 +28,4 @@ Lastly we will create the `Dockerfile`. Like Go programming, it is perfectly oka
 
 I'll respond here once you've completed those steps!
 
-📖 [Become a Dockerfile guru](https://docs.docker.com/engine/reference/builder/)
+📖 [Become a `Dockerfile` guru](https://docs.docker.com/engine/reference/builder/)

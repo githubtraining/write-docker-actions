@@ -1,8 +1,8 @@
-### :keyboard: Activity: Create issue-maker's Dockerfile
+### :keyboard: Activity: Create issue-maker's `Dockerfile`
 
-One more piece to add and that is this actions Dockerfile. Once you complete this you will have all the pieces in place to use your final action!
+One more piece to add and that is this actions `Dockerfile`. Once you complete this you will have all the pieces in place to use your final action!
 
-1. Create and add the following contents to the `.github/actions/issue-maker/Dockerfile` file:
+1. Create and add the following contents to the `.github/actions/issue-maker/`Dockerfile`` file:
    You can use [this link]({{quicklink}}) to easily create this file.
 
    ```dockerfile
@@ -24,4 +24,4 @@ One more piece to add and that is this actions Dockerfile. Once you complete thi
 
 I'll respond here once you've completed those steps!
 
-📖 [Become a Dockerfile guru](https://docs.docker.com/engine/reference/builder/)
+📖 [Become a `Dockerfile` guru](https://docs.docker.com/engine/reference/builder/)

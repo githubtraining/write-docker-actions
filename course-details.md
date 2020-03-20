@@ -15,7 +15,7 @@ You'll know the answers to questions like:
 - What is a workflow?
 - What are actions?
 - What is action metadata?
-- What is a Dockerfile?
+- What is a `Dockerfile`?
 - What are GitHub Actions capable of?
 - What programming languages can I write GitHub Actions in?
 
@@ -45,4 +45,4 @@ It is also worth noting that this course is one of many in a GitHub Actions Lear
 
 ## Audience
 
-This is a great course for intermediate developers who are looking to learn how to create custom actions to benefit their workflows. The focal point of the content isn't on which language to create your actions in, rather how to put the pieces of source code, metadata, Dockerfile and workflows together to accomplish your goals.
+This is a great course for intermediate developers who are looking to learn how to create custom actions to benefit their workflows. The focal point of the content isn't on which language to create your actions in, rather how to put the pieces of source code, metadata, `Dockerfile` and workflows together to accomplish your goals.

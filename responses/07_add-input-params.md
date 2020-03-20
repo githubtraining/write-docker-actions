@@ -18,7 +18,7 @@ To add inputs we need to add the `inputs:` parameter to the `action.yml` file. T
 
 Let's take a look at how this fits into an `action.yml` file.
 
-**action.yml**
+**`action.yml`**
 
 ```yaml
 name: "my hello action"
@@ -57,7 +57,7 @@ Or we could leave them out and rely on their default values.
 
 The example below demonstrates a mix of both:
 
-**my-workflow.yml**
+**`my-workflow.yml`**
 
 ```yaml
 name: "Docker Actions"
