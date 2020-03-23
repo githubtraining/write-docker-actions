@@ -13,6 +13,9 @@ template:
 # 4. (PR) Create action.yml (Add a Hello World action)
 # 5. (Issue) Kittens everywhere
 # 6. (PR) External APIs
+# 7. (Issue) Consuming action outputs
+# 8. (PR) Use outputs
+# 9. (Issue) Last minute notes
 
 before:
   - type: updateBranchProtection
@@ -506,7 +509,7 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/cat-facts/Dockerfile'
-              editLink: '%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: Dockerfile
         # End filepath verification
         #######################################################
@@ -538,7 +541,7 @@ steps:
       - type: updateBranchProtection
       - type: createIssue
         body: 13_action-three-workflow.md
-        title: Consuming Action Outputs
+        title: Consuming action outputs
         action_id: outputIssue
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
@@ -567,26 +570,26 @@ steps:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
 
         # if those statments FAIL... do this
         else:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Use Outputs
+              title: Use outputs
           # if those gates === true Then do this stuff
       - type: respond
-        issue: Consuming Action Outputs
+        issue: Consuming action outputs
         with: new-pull-request.md
         data:
           pullUrl: '%payload.pull_request.html_url%'
       - type: closeIssue
-        issue: Consuming Action Outputs
+        issue: Consuming action outputs
       - type: respond
         with: 14_action-three.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/package.json'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/package.json'
 
   - title: Add third Actions metadata
     description: Create the metadata for the third Action
@@ -596,7 +599,7 @@ steps:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
       #######################################################
       # Validate the filepath for the requirements.txt file
       # get tree
@@ -622,14 +625,14 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/issue-maker/package.json'
-              editLink: '%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: package.json
         # End filepath verification
         #######################################################
       - type: respond
         with: 14_create-metadata.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/action.yml'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/action.yml'
 
   - title: Add third Actions JavaScript files
     description: Create the JavaScript files for the third Action
@@ -639,7 +642,7 @@ steps:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
@@ -665,14 +668,14 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/issue-maker/action.yml'
-              editLink: '%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: action.yml
         # End filepath verification
         #######################################################
       - type: respond
         with: 14_create-js-files.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/src/index.js'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/src/index.js'
 
   - title: Create the final actions Dockerfile
     description: Add a pull request label to trigger the workflow
@@ -682,7 +685,7 @@ steps:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
@@ -708,14 +711,14 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/issue-maker/src/index.js'
-              editLink: '%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: index.js
         # End filepath verification
         #######################################################
       - type: respond
         with: 14_create-dockerfile.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/Dockerfile'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/Dockerfile'
 
   - title: Trigger the third Action
     description: Add a pull request label to trigger the workflow
@@ -725,7 +728,7 @@ steps:
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
@@ -751,7 +754,7 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/issue-maker/Dockerfile'
-              editLink: '%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: Dockerfile
         # End filepath verification
         #######################################################

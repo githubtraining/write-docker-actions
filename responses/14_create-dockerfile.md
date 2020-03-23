@@ -2,7 +2,7 @@
 
 One more piece to add and that is this actions `Dockerfile`. Once you complete this you will have all the pieces in place to use your final action!
 
-1. Create and add the following contents to the `.github/actions/issue-maker/`Dockerfile`` file:
+1. Create and add the following contents to `.github/actions/issue-maker/Dockerfile`:
    You can use [this link]({{quicklink}}) to easily create this file.
 
    ```dockerfile
