@@ -380,14 +380,14 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/cat-facts/action.yml'
-              editLink: '%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: action.yml
         # End filepath verification
         #######################################################
       - type: respond
         with: 10_create-python-file.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/src/main.py'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/src/main.py'
 
   - title: Add Python dependencies
     description: Add the requirements.txt file
@@ -422,14 +422,14 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/cat-facts/src/main.py'
-              editLink: '%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: main.py
         # End filepath verification
         #######################################################
       - type: respond
         with: 10_create-requirements.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/requirements.txt'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/requirements.txt'
 
   - title: Create the Dockerfile for the action
     description: Add the Dockerfile to the action
@@ -464,14 +464,14 @@ steps:
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: '.github/actions/cat-facts/requirements.txt'
-              editLink: '%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: requirements.txt
         # End filepath verification
         #######################################################
       - type: respond
         with: 10_create-dockerfile.md
         data:
-          quicklink: '%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/Dockerfile'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/Dockerfile'
 
   - title: Use the cat fact action in a workflow
     description: Edit the workflow file to now use the newly created cat fact action
