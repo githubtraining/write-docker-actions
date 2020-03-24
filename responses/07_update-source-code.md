@@ -36,7 +36,7 @@ Great job 👍 next let's update our source code to consume the inputs that are 
    }
    ```
 
-1. Commit the changes to the `hello-world` branch
+1. Commit the changes to this branch
 
 ---
 

@@ -19,7 +19,7 @@ The first iteration of our action will follow the traditional path of logging "H
    }
    ```
 
-2. Commit the changes to the existing `hello-world` branch
+2. Commit the changes to this branch
 3. Click the green `Commit new file` button
 
 ---

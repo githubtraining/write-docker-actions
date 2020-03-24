@@ -1,11 +1,22 @@
-title: "GitHub Actions: Writing Docker Actions"
-tagline: Create custom automation tasks for your unique workflow using GitHub Actions
+title: 'GitHub Actions: Write Docker container actions'
 description: >-
-  Learn how to write your own GitHub Docker Action!  This course will
+  Learn how to write your own GitHub Docker container action!  This course will
   empower you to begin automating customized tasks unique to your workflow.
 template:
-  repo: "write-docker-actions-template"
-  name: "write-docker-actions"
+  repo: 'write-docker-actions-template'
+  name: 'write-docker-actions'
+
+# Repo artifacts
+# 1. (Issue) Start here!
+# 2. (PR) Create my first workflow
+# 3. (Issue) Your first Docker based action
+# 4. (PR) Add a Hello World action
+# 5. (Issue) Kittens everywhere
+# 6. (PR) External APIs
+# 7. (Issue) Consuming action outputs
+# 8. (PR) Use outputs
+# 9. (Issue) Last minute notes
+
 before:
   - type: updateBranchProtection
   - type: createLabel
@@ -22,50 +33,43 @@ before:
     body: 01_welcome-issue.md
     action_id: welcomeIssue
   - type: respond
-    issue: "%actions.welcomeIssue.data.number%"
+    issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
     data:
-      quicklink: "%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank"
-      actionsUrl: "%payload.repository.html_url%/actions/new"
+      quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
+      actionsUrl: '%payload.repository.html_url%/actions/new'
 steps:
   - title: Setup a workflow file
     description: Create a pull request to add a workflow
-    event: pull_request
-    link: "{{ repoUrl }}/issues/1"
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/1'
     actions:
+      # if the pull request title equals 'Create my first workflow'
       - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: "%payload.action%"
-            operator: ===
-            right: opened
-          - left: "%payload.action%"
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
-      - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Create my-workflow.yml
+        right: Create my first workflow
 
         # if those statments FAIL... do this
         else:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Create my-workflow.yml
+              title: Create my first workflow
           # if those gates === true Then do this stuff
       - type: respond
         issue: Start here!
         with: new-pull-request.md
         data:
-          pullUrl: "%payload.pull_request.html_url%"
+          pullUrl: '%payload.pull_request.html_url%'
       - type: closeIssue
         issue: Start here!
       - type: respond
         with: 01_explain-workflow.md
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
+          actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 01_explain-environment.md
       - type: respond
@@ -74,247 +78,307 @@ steps:
         with: 02_explain-steps.md
       - type: respond
         with: 02_modify-workflow.md
-        issue: Create my-workflow.yml
+        issue: Create my first workflow
         data:
-          workflowFile: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml"
+          workflowFile: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
   - title: Add an Action reference
     description: Add an Action reference to the workflow file
     event: pull_request.synchronize
-    link: "{{ repoUrl }}/pull/2"
+    link: '{{ repoUrl }}/pull/2'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Create my first workflow
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Create my first workflow**
       - type: getPullRequest
-        pullRequest: Create my-workflow.yml
+        pullRequest: Create my first workflow
         action_id: workflowPr
       - type: respond
         with: 03_reference-actions.md
         data:
-          workflowFile: "%payload.repository.html_url%/edit/%actions.workflowPr.data.head.ref%/.github/workflows/my-workflow.yml"
+          workflowFile: '%payload.repository.html_url%/edit/%actions.workflowPr.data.head.ref%/.github/workflows/my-workflow.yml'
 
   - title: Creating the Action metadata
     description: Create an action.yml file and add necessary metatdata for our Action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/2'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Create my first workflow
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Create my first workflow**
       - type: createIssue
-        title: Your first Docker action
+        title: Your first Docker based action
         body: docker-overview.md
         action_id: dockerOverview
+        data:
+          actionsUrl: '%payload.repository.html_url%/actions/new'
+          quicklink: '%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/action.yml'
+        comments:
+          - 05_explain-actions.md
+          - 05_explain-metadata.md
+          - 05_create-metadata.md
       - type: createReview
         event: APPROVE
         body: 04_on-to-actions.md
         data:
-          issueUrl: "%actions.dockerOverview.data.html_url%"
-        pullRequest: Create my-workflow.yml
+          issueUrl: '%actions.dockerOverview.data.html_url%'
+        pullRequest: Create my first workflow
       - type: mergePullRequest
-      - type: respond
-        with: 05_explain-actions.md
-        issue: Your first Docker action
-      - type: respond
-        with: 05_explain-metadata.md
-        issue: Your first Docker action
-      - type: respond
-        with: 05_create-metadata.md
-        issue: Your first Docker action
-        data:
-          quicklink: "%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/action.yml"
 
   - title: Creating the action logic
     description: Adding source code to the action
-    event: pull_request
-    # link: "{{ repoUrl }}/issue1/1"
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/3'
     actions:
+      # if the pull request title equals 'Add a Hello World action'
       - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: "%payload.action%"
-            operator: ===
-            right: opened
-          - left: "%payload.action%"
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create action.yml'
-      - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Create action.yml
+        right: Add a Hello World action
 
         # if those statments FAIL... do this
         else:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Create action.yml
+              title: Add a Hello World action
           # if those gates === true Then do this stuff
 
       - type: respond
         with: 06_hello-docker-actions.md
         action_id: helloPr
         data:
-          quicklink: "%payload.repository.html_url%/new/hello-world?filename=.github/actions/hello-world/main.go"
-          # actionsUrl: "%payload.repository.html_url%/actions"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/hello-world/main.go'
+          # actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 05_hello-pr.md
-        issue: Your first Docker action
+        issue: Your first Docker based action
         data:
-          pullUrl: "%actions.helloPr.data.html_url%"
+          pullUrl: '%actions.helloPr.data.html_url%'
       - type: closeIssue
-        issue: Your first Docker action
+        issue: Your first Docker based action
 
   - title: Create the action Dockerfile
     description: Creat a Dockerfile containing the actions source code
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       #######################################################
       # Validate the filepath for the main.go file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/hello-world/main.go"
+        right: 'path:.github/actions/hello-world/main.go'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: main.go
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/hello-world/main.go"
-              editLink: "%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/hello-world/main.go'
+              editLink: '%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%'
               fileName: main.go
         # End filepath verification
         #######################################################
       - type: respond
         with: 07_create-dockerfile.md
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
-          quicklink: "%payload.repository.html_url%/new/hello-world?filename=.github/actions/hello-world/Dockerfile"
+          actionsUrl: '%payload.repository.html_url%/actions'
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/hello-world/Dockerfile'
 
   - title: Adding input parameters to metadata
     description: extend your action to accept input parameters
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       #######################################################
       # Validate the filepath for the main.go file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/hello-world/Dockerfile"
+        right: 'path:.github/actions/hello-world/Dockerfile'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: Dockerfile
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/hello-world/Dockerfile"
-              editLink: "%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/hello-world/Dockerfile'
+              editLink: '%payload.repository.html_url%/edit/hello-world/%actions.fileLocation.path%'
               fileName: Dockerfile
         # End filepath verification
         #######################################################
       - type: respond
         with: 07_hello-result.md
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
+          actionsUrl: '%payload.repository.html_url%/actions'
 
       - type: respond
         with: 07_add-input-params.md
       - type: respond
         with: 07_update-metadata.md
         data:
-          quicklink: "%payload.repository.html_url%/edit/hello-world/.github/actions/hello-world/action.yml"
+          quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/actions/hello-world/action.yml'
 
   - title: Adding input parameters to source code files
     description: extend your action to accept input parameters
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       - type: respond
         with: 07_update-source-code.md
         data:
-          quicklink: "%payload.repository.html_url%/edit/hello-world/.github/actions/hello-world/main.go"
+          quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/actions/hello-world/main.go'
 
   - title: Using input parameters in the workflow
     description: Assign values to the newly created input parameters
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       - type: respond
         with: 07_update-workflow.md
         data:
-          quicklink: "%payload.repository.html_url%/edit/hello-world/.github/workflows/my-workflow.yml"
+          quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
   - title: Exploring your input parameters
     description: view the results of adding input parameter
     event: pull_request.synchronize #ideally would like workflow complete to trigger this
+    link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       - type: respond
         with: 08_input-result.md
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
+          actionsUrl: '%payload.repository.html_url%/actions'
       - type: removeBranchProtection
       - type: respond
         with: 08_experiment.md
 
-  - title: Integrating Actions with external APIs
-    description: Write a new Action that call an external API
+  - title: Integrating actions with external APIs
+    description: Write a new action that calls an external API
     event: pull_request.closed
+    link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        every: true
+        gates:
+        - left: '%payload.pull_request.merged'
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: merge a pull request titled **Add a Hello World action**
       - type: updateBranchProtection
       - type: createIssue
         body: 09_external-apis.md
         title: Kittens everywhere
         action_id: catFact
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
+          actionsUrl: '%payload.repository.html_url%/actions'
+          workflowFile: '%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml'
+        comments:
+          - 09_new-action.md
       - type: respond
         with: 08_next-steps.md
-        issue: Create action.yml
+        issue: Add a Hello World action
         data:
-          issueUrl: "%actions.catFact.data.html_url%"
-      - type: respond
-        with: 09_new-action.md
-        issue: Kittens everywhere
-        data:
-          # The following workflowFile var does not point where it should for some reason
-          workflowFile: "%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml"
-          actionsUrl: "%payload.repository.html_url%/actions"
+          issueUrl: '%actions.catFact.data.html_url%'
 
   - title: Create your new Action metadata
     description: Comment out the lines in the workflow to prevent unwanted runs
-    event: pull_request
-    # link: "{{ repoUrl }}/issue1/1"
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/5'
     actions:
+      # if the pull request title equals 'Create my first workflow'
       - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: "%payload.action%"
-            operator: ===
-            right: opened
-          - left: "%payload.action%"
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
-      - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
 
@@ -329,174 +393,198 @@ steps:
         issue: Kittens everywhere
         with: new-pull-request.md
         data:
-          pullUrl: "%payload.pull_request.html_url%"
+          pullUrl: '%payload.pull_request.html_url%'
       - type: closeIssue
         issue: Kittens everywhere
       - type: respond
         with: 10_create-metadata.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/action.yml"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/action.yml'
 
   - title: Create your action's source code files
     description: Add main.py to your Action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/cat-facts/action.yml"
+        right: 'path:.github/actions/cat-facts/action.yml'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: action.yml
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/cat-facts/action.yml"
-              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/cat-facts/action.yml'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: action.yml
         # End filepath verification
         #######################################################
       - type: respond
         with: 10_create-python-file.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/src/main.py"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/src/main.py'
 
   - title: Add Python dependencies
     description: Add the requirements.txt file
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the main.py file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/cat-facts/src/main.py"
+        right: 'path:.github/actions/cat-facts/src/main.py'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: main.py
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/cat-facts/src/main.py"
-              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/cat-facts/src/main.py'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: main.py
         # End filepath verification
         #######################################################
       - type: respond
         with: 10_create-requirements.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/requirements.txt"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/requirements.txt'
 
   - title: Create the Dockerfile for the action
     description: Add the Dockerfile to the action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the requirements.txt file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/cat-facts/requirements.txt"
+        right: 'path:.github/actions/cat-facts/requirements.txt'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: requirements.txt
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/cat-facts/requirements.txt"
-              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/cat-facts/requirements.txt'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: requirements.txt
         # End filepath verification
         #######################################################
       - type: respond
         with: 10_create-dockerfile.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-two?filename=.github/actions/cat-facts/Dockerfile"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/Dockerfile'
 
   - title: Use the cat fact action in a workflow
     description: Edit the workflow file to now use the newly created cat fact action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the Dockerfile file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/cat-facts/Dockerfile"
+        right: 'path:.github/actions/cat-facts/Dockerfile'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: Dockerfile
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/cat-facts/Dockerfile"
-              editLink: "%payload.repository.html_url%/edit/action-two/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/cat-facts/Dockerfile'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: Dockerfile
         # End filepath verification
         #######################################################
@@ -506,242 +594,277 @@ steps:
       - type: respond
         with: 11_edit-workflow.md
         data:
-          workflowFile: "%payload.repository.html_url%/edit/%actions.apiPr.data.head.ref%/.github/workflows/my-workflow.yml"
-          actionsUrl: "%payload.repository.html_url%/actions"
+          workflowFile: '%payload.repository.html_url%/edit/%actions.apiPr.data.head.ref%/.github/workflows/my-workflow.yml'
+          actionsUrl: '%payload.repository.html_url%/actions'
 
   - title: Having actions teach us about cats
     description: Trigger your workflow to get cat facts
     event: pull_request.synchronize
-    # link: "{{ repoUrl }}/pull/2"
+    link: '{{ repoUrl }}/pull/6'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       - type: removeBranchProtection
       - type: respond
         with: 12_trigger-workflow.md
         issue: External APIs
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
+          actionsUrl: '%payload.repository.html_url%/actions'
 
   - title: Configure the workflow for a third Action
     description: Edit the workflow to accomodate the third action
     event: pull_request.closed
+    link: '{{ repoUrl }}/pull/6'
     actions:
+      - type: gate
+        every: true
+        gates:
+        - left: '%payload.pull_request.merged'
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: merge a pull request titled **External APIs**
       - type: updateBranchProtection
       - type: createIssue
         body: 13_action-three-workflow.md
-        title: Consuming Action Outputs
+        title: Consuming action outputs
         action_id: outputIssue
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
-          workflowFile: "%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml"
+          actionsUrl: '%payload.repository.html_url%/actions'
+          workflowFile: '%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml'
       - type: respond
         with: 12_next-steps.md
         issue: External APIs
         data:
-          issueUrl: "%actions.outputIssue.data.html_url%"
+          issueUrl: '%actions.outputIssue.data.html_url%'
 
   - title: Write the final Action
     description: Create an Action that consumes output from another Action and uses the JavaScript actions toolkit
-    event: pull_request
-    # link: "{{ repoUrl }}/issue1/1"
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/7'
     actions:
+      # if the pull request title equals 'Create my first workflow'
       - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: "%payload.action%"
-            operator: ===
-            right: opened
-          - left: "%payload.action%"
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
-      - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
 
         # if those statments FAIL... do this
         else:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Use Outputs
+              title: Use outputs
           # if those gates === true Then do this stuff
       - type: respond
-        issue: Consuming Action Outputs
+        issue: Consuming action outputs
         with: new-pull-request.md
         data:
-          pullUrl: "%payload.pull_request.html_url%"
+          pullUrl: '%payload.pull_request.html_url%'
       - type: closeIssue
-        issue: Consuming Action Outputs
+        issue: Consuming action outputs
       - type: respond
         with: 14_action-three.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/package.json"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/package.json'
 
   - title: Add third Actions metadata
     description: Create the metadata for the third Action
     event: pull_request.synchronize
-    # link: "{{ repoUrl }}/pull/2"
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the requirements.txt file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/issue-maker/package.json"
+        right: 'path:.github/actions/issue-maker/package.json'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: package.json
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/issue-maker/package.json"
-              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/issue-maker/package.json'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: package.json
         # End filepath verification
         #######################################################
       - type: respond
         with: 14_create-metadata.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/action.yml"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/action.yml'
 
   - title: Add third Actions JavaScript files
     description: Create the JavaScript files for the third Action
     event: pull_request.synchronize
-    # link: "{{ repoUrl }}/pull/2"
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/issue-maker/action.yml"
+        right: 'path:.github/actions/issue-maker/action.yml'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: action.yml
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/issue-maker/action.yml"
-              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/issue-maker/action.yml'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: action.yml
         # End filepath verification
         #######################################################
       - type: respond
         with: 14_create-js-files.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/src/index.js"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/src/index.js'
 
   - title: Create the final actions Dockerfile
     description: Add a pull request label to trigger the workflow
     event: pull_request.synchronize
-    # link: "{{ repoUrl }}/pull/2"
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/issue-maker/src/index.js"
+        right: 'path:.github/actions/issue-maker/src/index.js'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: index.js
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/issue-maker/src/index.js"
-              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/issue-maker/src/index.js'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: index.js
         # End filepath verification
         #######################################################
       - type: respond
         with: 14_create-dockerfile.md
         data:
-          quicklink: "%payload.repository.html_url%/new/action-three?filename=.github/actions/issue-maker/Dockerfile"
+          quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/Dockerfile'
 
   - title: Trigger the third Action
     description: Add a pull request label to trigger the workflow
     event: pull_request.synchronize
-    # link: "{{ repoUrl }}/pull/2"
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
-        left: "%payload.pull_request.title%"
+        left: '%payload.pull_request.title%'
         operator: ===
-        right: Use Outputs
+        right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
       - type: getTree
         action_id: isInTree
         recursive: true
-        sha: "%payload.pull_request.head.sha%"
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
-        left: "%actions.isInTree.data.tree%"
+        left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: "path:.github/actions/issue-maker/Dockerfile"
+        right: 'path:.github/actions/issue-maker/Dockerfile'
         else:
           # if file isn't where expected find true location
           - type: findInTree
             path: Dockerfile
-            tree: "%actions.isInTree.data.tree%"
+            tree: '%actions.isInTree.data.tree%'
             # multiple: true
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: "%actions.fileLocation.path%"
-              needFile: ".github/actions/issue-maker/Dockerfile"
-              editLink: "%payload.repository.html_url%/edit/action-three/%actions.fileLocation.path%"
+              haveFile: '%actions.fileLocation.path%'
+              needFile: '.github/actions/issue-maker/Dockerfile'
+              editLink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%'
               fileName: Dockerfile
         # End filepath verification
         #######################################################
@@ -753,11 +876,11 @@ steps:
       - type: respond
         with: 15_add-a-label.md
         data:
-          actionsUrl: "%payload.repository.html_url%/actions"
-          issueUrl: "%actions.allDone.data.html_url%"
+          actionsUrl: '%payload.repository.html_url%/actions'
+          issueUrl: '%actions.allDone.data.html_url%'
       - type: respond
-        issue: "%actions.allDone.data.number%"
+        issue: '%actions.allDone.data.number%'
         with: 16_publishing.md
       - type: respond
-        issue: "%actions.allDone.data.number%"
+        issue: '%actions.allDone.data.number%'
         with: 16_complete.md

@@ -1,4 +1,4 @@
-### :keyboard: Activity: Create cat fact Dockerfile
+### :keyboard: Activity: Create cat fact `Dockerfile`
 
 Awesome 🎉
 
@@ -25,11 +25,11 @@ Lastly we will create the `Dockerfile`, just like we did with our first action.
    CMD [ "python", "/src/main.py" ]
    ```
 
-2. Commit the changes to the existing `action-two` branch
+2. Commit the changes to this branch
 3. Click the green `Commit new file` button
 
 ---
 
 I'll respond here once you've completed those steps!
 
-📖 [Become a Dockerfile guru](https://docs.docker.com/engine/reference/builder/)
+📖 [Become a `Dockerfile` guru](https://docs.docker.com/engine/reference/builder/)
