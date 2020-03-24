@@ -8,9 +8,9 @@ template:
 
 # Repo artifacts
 # 1. (Issue) Start here!
-# 2. (PR) Create my-workflow.yml (should be 'Create my first workflow')
-# 3. (Issue) Your first Docker action (should be Docker based)
-# 4. (PR) Create action.yml (Add a Hello World action)
+# 2. (PR) Create my first workflow
+# 3. (Issue) Your first Docker based action
+# 4. (PR) Add a Hello World action
 # 5. (Issue) Kittens everywhere
 # 6. (PR) External APIs
 # 7. (Issue) Consuming action outputs
@@ -53,18 +53,18 @@ steps:
           - left: '%payload.action%'
             operator: ===
             right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
+            # AND the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Create my-workflow.yml
+        right: Create my first workflow
 
         # if those statments FAIL... do this
         else:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Create my-workflow.yml
+              title: Create my first workflow
           # if those gates === true Then do this stuff
       - type: respond
         issue: Start here!
@@ -85,7 +85,7 @@ steps:
         with: 02_explain-steps.md
       - type: respond
         with: 02_modify-workflow.md
-        issue: Create my-workflow.yml
+        issue: Create my first workflow
         data:
           workflowFile: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
@@ -95,7 +95,7 @@ steps:
     link: '{{ repoUrl }}/pull/2'
     actions:
       - type: getPullRequest
-        pullRequest: Create my-workflow.yml
+        pullRequest: Create my first workflow
         action_id: workflowPr
       - type: respond
         with: 03_reference-actions.md
@@ -107,7 +107,7 @@ steps:
     event: pull_request.synchronize
     actions:
       - type: createIssue
-        title: Your first Docker action
+        title: Your first Docker based action
         body: docker-overview.md
         action_id: dockerOverview
       - type: createReview
@@ -115,19 +115,19 @@ steps:
         body: 04_on-to-actions.md
         data:
           issueUrl: '%actions.dockerOverview.data.html_url%'
-        pullRequest: Create my-workflow.yml
+        pullRequest: Create my first workflow
       - type: mergePullRequest
       - type: respond
         with: 05_explain-actions.md
-        issue: Your first Docker action
+        issue: Your first Docker based action
         data:
           actionsUrl: '%payload.repository.html_url%/actions/new'
       - type: respond
         with: 05_explain-metadata.md
-        issue: Your first Docker action
+        issue: Your first Docker based action
       - type: respond
         with: 05_create-metadata.md
-        issue: Your first Docker action
+        issue: Your first Docker based action
         data:
           quicklink: '%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/action.yml'
 
@@ -145,18 +145,18 @@ steps:
           - left: '%payload.action%'
             operator: ===
             right: edited
-            # AND the pull request title equals 'Create action.yml'
+            # AND the pull request title equals 'Add a Hello World action'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
-        right: Create action.yml
+        right: Add a Hello World action
 
         # if those statments FAIL... do this
         else:
           - type: respond
             with: e-rename-pr.md
             data:
-              title: Create action.yml
+              title: Add a Hello World action
           # if those gates === true Then do this stuff
 
       - type: respond
@@ -167,11 +167,11 @@ steps:
           # actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 05_hello-pr.md
-        issue: Your first Docker action
+        issue: Your first Docker based action
         data:
           pullUrl: '%actions.helloPr.data.html_url%'
       - type: closeIssue
-        issue: Your first Docker action
+        issue: Your first Docker based action
 
   - title: Create the action Dockerfile
     description: Creat a Dockerfile containing the actions source code
@@ -300,7 +300,7 @@ steps:
           actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 08_next-steps.md
-        issue: Create action.yml
+        issue: Add a Hello World action
         data:
           issueUrl: '%actions.catFact.data.html_url%'
       - type: respond
@@ -325,7 +325,7 @@ steps:
           - left: '%payload.action%'
             operator: ===
             right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
+            # AND the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
@@ -566,7 +566,7 @@ steps:
           - left: '%payload.action%'
             operator: ===
             right: edited
-            # AND the pull request title equals 'Create my-workflow.yml'
+            # AND the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
