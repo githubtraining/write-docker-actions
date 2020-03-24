@@ -41,19 +41,12 @@ before:
 steps:
   - title: Setup a workflow file
     description: Create a pull request to add a workflow
-    event: pull_request
+    event: 
+      - pull_request.opened
+      - pull_request.edited
     link: '{{ repoUrl }}/issues/1'
     actions:
-      - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: '%payload.action%'
-            operator: ===
-            right: opened
-          - left: '%payload.action%'
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create my first workflow'
+      # if the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
@@ -105,6 +98,7 @@ steps:
   - title: Creating the Action metadata
     description: Create an action.yml file and add necessary metatdata for our Action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/2'
     actions:
       - type: createIssue
         title: Your first Docker based action
@@ -133,19 +127,12 @@ steps:
 
   - title: Creating the action logic
     description: Adding source code to the action
-    event: pull_request
-    # link: '{{ repoUrl }}/issue1/1'
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/3'
     actions:
-      - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: '%payload.action%'
-            operator: ===
-            right: opened
-          - left: '%payload.action%'
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Add a Hello World action'
+      # if the pull request title equals 'Add a Hello World action'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
@@ -176,6 +163,7 @@ steps:
   - title: Create the action Dockerfile
     description: Creat a Dockerfile containing the actions source code
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
       #######################################################
       # Validate the filepath for the main.go file
@@ -215,6 +203,7 @@ steps:
   - title: Adding input parameters to metadata
     description: extend your action to accept input parameters
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
       #######################################################
       # Validate the filepath for the main.go file
@@ -260,6 +249,7 @@ steps:
   - title: Adding input parameters to source code files
     description: extend your action to accept input parameters
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
       - type: respond
         with: 07_update-source-code.md
@@ -269,6 +259,7 @@ steps:
   - title: Using input parameters in the workflow
     description: Assign values to the newly created input parameters
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/4'
     actions:
       - type: respond
         with: 07_update-workflow.md
@@ -278,6 +269,7 @@ steps:
   - title: Exploring your input parameters
     description: view the results of adding input parameter
     event: pull_request.synchronize #ideally would like workflow complete to trigger this
+    link: '{{ repoUrl }}/pull/4'
     actions:
       - type: respond
         with: 08_input-result.md
@@ -290,6 +282,7 @@ steps:
   - title: Integrating Actions with external APIs
     description: Write a new Action that call an external API
     event: pull_request.closed
+    link: '{{ repoUrl }}/pull/4'
     actions:
       - type: updateBranchProtection
       - type: createIssue
@@ -313,19 +306,12 @@ steps:
 
   - title: Create your new Action metadata
     description: Comment out the lines in the workflow to prevent unwanted runs
-    event: pull_request
-    # link: '{{ repoUrl }}/issue1/1'
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/5'
     actions:
-      - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: '%payload.action%'
-            operator: ===
-            right: opened
-          - left: '%payload.action%'
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create my first workflow'
+      # if the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
@@ -353,6 +339,7 @@ steps:
   - title: Create your action's source code files
     description: Add main.py to your Action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -395,6 +382,7 @@ steps:
   - title: Add Python dependencies
     description: Add the requirements.txt file
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -437,6 +425,7 @@ steps:
   - title: Create the Dockerfile for the action
     description: Add the Dockerfile to the action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -479,6 +468,7 @@ steps:
   - title: Use the cat fact action in a workflow
     description: Edit the workflow file to now use the newly created cat fact action
     event: pull_request.synchronize
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -525,7 +515,7 @@ steps:
   - title: Having actions teach us about cats
     description: Trigger your workflow to get cat facts
     event: pull_request.synchronize
-    # link: '{{ repoUrl }}/pull/2'
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: removeBranchProtection
       - type: respond
@@ -537,6 +527,7 @@ steps:
   - title: Configure the workflow for a third Action
     description: Edit the workflow to accomodate the third action
     event: pull_request.closed
+    link: '{{ repoUrl }}/pull/6'
     actions:
       - type: updateBranchProtection
       - type: createIssue
@@ -554,19 +545,12 @@ steps:
 
   - title: Write the final Action
     description: Create an Action that consumes output from another Action and uses the JavaScript actions toolkit
-    event: pull_request
-    # link: '{{ repoUrl }}/issue1/1'
+    event: 
+      - pull_request.opened
+      - pull_request.edited
+    link: '{{ repoUrl }}/issues/7'
     actions:
-      - type: gate
-        gates:
-          # if the payload action is 'opened' OR 'edited'
-          - left: '%payload.action%'
-            operator: ===
-            right: opened
-          - left: '%payload.action%'
-            operator: ===
-            right: edited
-            # AND the pull request title equals 'Create my first workflow'
+      # if the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
@@ -594,7 +578,7 @@ steps:
   - title: Add third Actions metadata
     description: Create the metadata for the third Action
     event: pull_request.synchronize
-    # link: '{{ repoUrl }}/pull/2'
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -637,7 +621,7 @@ steps:
   - title: Add third Actions JavaScript files
     description: Create the JavaScript files for the third Action
     event: pull_request.synchronize
-    # link: '{{ repoUrl }}/pull/2'
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -680,7 +664,7 @@ steps:
   - title: Create the final actions Dockerfile
     description: Add a pull request label to trigger the workflow
     event: pull_request.synchronize
-    # link: '{{ repoUrl }}/pull/2'
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -723,7 +707,7 @@ steps:
   - title: Trigger the third Action
     description: Add a pull request label to trigger the workflow
     event: pull_request.synchronize
-    # link: '{{ repoUrl }}/pull/2'
+    link: '{{ repoUrl }}/pull/8'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
