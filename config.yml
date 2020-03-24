@@ -87,6 +87,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/2'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Create my first workflow
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Create my first workflow**
       - type: getPullRequest
         pullRequest: Create my first workflow
         action_id: workflowPr
@@ -100,6 +109,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/2'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Create my first workflow
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Create my first workflow**
       - type: createIssue
         title: Your first Docker based action
         body: docker-overview.md
@@ -165,6 +183,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       #######################################################
       # Validate the filepath for the main.go file
       # get tree
@@ -205,6 +232,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       #######################################################
       # Validate the filepath for the main.go file
       # get tree
@@ -251,6 +287,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       - type: respond
         with: 07_update-source-code.md
         data:
@@ -261,6 +306,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       - type: respond
         with: 07_update-workflow.md
         data:
@@ -271,6 +325,15 @@ steps:
     event: pull_request.synchronize #ideally would like workflow complete to trigger this
     link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Add a Hello World action**
       - type: respond
         with: 08_input-result.md
         data:
@@ -284,6 +347,18 @@ steps:
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/4'
     actions:
+      - type: gate
+        every: true
+        gates:
+        - left: '%payload.pull_request.merged'
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: Add a Hello World action
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: merge a pull request titled **Add a Hello World action**
       - type: updateBranchProtection
       - type: createIssue
         body: 09_external-apis.md
@@ -345,6 +420,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
@@ -388,6 +468,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the main.py file
       # get tree
@@ -431,6 +516,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the requirements.txt file
       # get tree
@@ -474,6 +564,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       #######################################################
       # Validate the filepath for the Dockerfile file
       # get tree
@@ -517,6 +612,15 @@ steps:
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/6'
     actions:
+      - type: gate
+        left: '%payload.pull_request.title%'
+        operator: ===
+        right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **External APIs**
       - type: removeBranchProtection
       - type: respond
         with: 12_trigger-workflow.md
@@ -529,6 +633,18 @@ steps:
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/6'
     actions:
+      - type: gate
+        every: true
+        gates:
+        - left: '%payload.pull_request.merged'
+        - left: '%payload.pull_request.title%'
+          operator: ===
+          right: External APIs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: merge a pull request titled **External APIs**
       - type: updateBranchProtection
       - type: createIssue
         body: 13_action-three-workflow.md
@@ -584,6 +700,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the requirements.txt file
       # get tree
@@ -627,6 +748,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
@@ -670,6 +796,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
@@ -713,6 +844,11 @@ steps:
         left: '%payload.pull_request.title%'
         operator: ===
         right: Use outputs
+        else:
+          - type: respond
+            with: e-generic.md
+            data:
+              expected: a commit to a pull request titled **Use outputs**
       #######################################################
       # Validate the filepath for the action.yml file
       # get tree
