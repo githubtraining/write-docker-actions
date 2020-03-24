@@ -70,7 +70,7 @@ If Python is a new programming language to you, like always don't worry. You are
    print(f"::set-output name=fact::{random_fact}")
    ```
 
-1. Commit the changes to the `action-two` branch:
+1. Commit the changes to this branch:
 
 ---
 

@@ -34,7 +34,7 @@ Now that we know what input parameters are, let's edit the metadata for our **he
      image: "Dockerfile"
    ```
 
-1. Commit the changes to the `hello-world` branch
+1. Commit the changes to this branch
 
 ---
 

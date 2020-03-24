@@ -21,7 +21,7 @@ Lastly we will create the `Dockerfile`. Like with Go programming, it is perfectl
    CMD ["hello"]
    ```
 
-2. Commit the changes to the existing `hello-world` branch
+2. Commit the changes to this branch
 3. Click the green `Commit new file` button
 
 ---

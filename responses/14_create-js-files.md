@@ -31,7 +31,7 @@
    run();
    ```
 
-1. Commit the changes to the `action-three` branch.
+1. Commit the changes to this branch.
 1. Click the green `Commit new file` button
 
 ---

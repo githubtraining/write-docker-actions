@@ -59,5 +59,5 @@ Our action will also need to accept an input so that we can let the user specify
      image: "Dockerfile"
    ```
 
-1. Commit the changes to the `action-three` branch.
+1. Commit the changes to this branch.
 1. Click the green `Commit new file` button

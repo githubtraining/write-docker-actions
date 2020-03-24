@@ -17,7 +17,7 @@ One more piece to add and that is this actions `Dockerfile`. Once you complete t
    CMD [ "node", "/src/index.js" ]
    ```
 
-2. Commit the changes to the existing `action-three` branch
+2. Commit the changes to this branch
 3. Click the green `Commit new file` button
 
 ---
