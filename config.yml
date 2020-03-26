@@ -25,6 +25,8 @@ tags:
 
 before:
   - type: updateBranchProtection
+    store:
+      actionsUrl: '%payload.repository.html_url%/actions'
   - type: createLabel
     name: first-cat-fact
     color: FFBD33
@@ -41,8 +43,6 @@ before:
   - type: respond
     issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
-    store:
-      actionsUrl: '%payload.repository.html_url%/actions'
     data:
       quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
 steps:
