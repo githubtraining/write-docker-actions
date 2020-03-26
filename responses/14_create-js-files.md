@@ -38,4 +38,4 @@
 
 ---
 
-I will respond once you have finished.
+I'll respond when you push changes to this pull request.

@@ -70,8 +70,8 @@ If Python is a new programming language to you, like always don't worry. You are
 
 1. Commit the changes to this branch:
 
+📖 [Learn Python programming](https://www.learnpython.org/)
+
 ---
 
-I'll respond in this pull request when you have completed these tasks.
-
-📖 [Learn Python programming](https://www.learnpython.org/)
+I'll respond when you push changes to this pull request.

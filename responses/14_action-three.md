@@ -35,4 +35,4 @@ This time we will start with the dependencies for our action. JavaScript project
 
 ---
 
-I will respond once you have finished.
+I'll respond when you push changes to this pull request.

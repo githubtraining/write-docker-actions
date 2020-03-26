@@ -22,8 +22,8 @@ One more piece to add and that is this actions `Dockerfile`. Once you complete t
 2. Commit the changes to this branch
 3. Click the green `Commit new file` button
 
+📖 [Become a `Dockerfile` guru](https://docs.docker.com/engine/reference/builder/)
+
 ---
 
-I'll respond here once you've completed those steps!
-
-📖 [Become a `Dockerfile` guru](https://docs.docker.com/engine/reference/builder/)
+I'll respond when you push changes to this pull request.

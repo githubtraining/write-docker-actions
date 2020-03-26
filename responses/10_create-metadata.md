@@ -29,4 +29,4 @@ We will not use the `fact` in in this portion of the course. There will be a lat
 
 ---
 
-I'll respond in this pull request when I notice you have completed these steps
+I'll respond when you push changes to this pull request.

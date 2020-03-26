@@ -24,8 +24,8 @@ The first iteration of our action will follow the traditional path of logging "H
 2. Commit the changes to this branch
 3. Click the green `Commit new file` button
 
+📖 [Learn Go programming](https://tour.golang.org/welcome/1)
+
 ---
 
-I'll respond here once you've completed those steps!
-
-📖 [Learn Go programming](https://tour.golang.org/welcome/1)
+I'll respond when you push changes to this pull request.

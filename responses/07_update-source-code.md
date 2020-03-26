@@ -40,4 +40,4 @@ Great job 👍 next let's update our source code to consume the inputs that are 
 
 ---
 
-I'll respond when I notice you have completed this step
+I'll respond when you push changes to this pull request.

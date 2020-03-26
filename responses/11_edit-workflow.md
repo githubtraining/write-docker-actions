@@ -37,4 +37,4 @@ Let's change the tigger and add the cat fact action
 
 ---
 
-I'll respond once you commit your changes
+I'll respond when you push changes to this pull request.

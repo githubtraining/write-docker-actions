@@ -47,4 +47,4 @@ If you'd like to see more examples of workflows and actions then check out these
 
 ---
 
-I'll respond in this pull request once you make these changes.
+I'll respond when you push changes to this pull request.

@@ -14,4 +14,4 @@ Our next lesson will show you how to add external libraries to an action as well
 
 ---
 
-When I notice that you have merged this branch I will open a **new issue** in your repository to continue guiding you.
+When I notice that you have **merged this branch** I will open a new issue in your repository to continue guiding you.

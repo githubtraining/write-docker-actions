@@ -23,4 +23,4 @@ Currently `my-workflow.yml` is not set up correctly for our use-case. It worked 
 
 ---
 
-I'll respond in this pull request once you make these changes.
+I'll respond when you push changes to this pull request.

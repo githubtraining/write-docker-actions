@@ -8,8 +8,8 @@ Great job! Everything is all set up and now we are ready to start learning about
 2. Wait a few seconds and then apply the `second-cat-fact` label to this pull request
 3. Check the workflow results on the [Actions tab]({{actionsUrl}})
 
----
-
 Feel free to continue adding labels to this pull request if you want to see more facts.
 
-When you are ready to move forward in the lesson merge this pull request into the `master` branch.
+---
+
+When you are ready to move forward in the lesson merge this pull request into the `master` branch. I will respond when you've merged this pull request.

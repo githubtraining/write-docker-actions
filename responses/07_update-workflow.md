@@ -30,4 +30,4 @@ The last piece to this actions puzzle is to edit the workflow file so that we ca
 
 ---
 
-I'll respond when I notice you have completed this step
+I'll respond when you push changes to this pull request.

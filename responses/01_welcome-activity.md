@@ -18,8 +18,6 @@ _It is important to place meaningful content into the body of the pull requests 
 
 </details>
 
-I'll respond in the new pull request when I detect it has been created.
-
 ---
 
-If at any point you're expecting a response and don't see one, refresh the page.
+I'll respond in the new pull request when I detect it has been created. If at any point you're expecting a response and don't see one, refresh the page.

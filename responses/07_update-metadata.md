@@ -38,4 +38,4 @@ Now that we know what input parameters are, let's edit the metadata for our **he
 
 ---
 
-I'll respond when I notice you have completed this step
+I'll respond when you push changes to this pull request.
