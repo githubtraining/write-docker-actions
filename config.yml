@@ -26,6 +26,7 @@ tags:
 before:
   - type: updateBranchProtection
     store:
+      repoUrl: '%payload.repository.html_url%'
       actionsUrl: '%payload.repository.html_url%/actions'
   - type: createLabel
     name: first-cat-fact
@@ -39,19 +40,21 @@ before:
   - type: createIssue
     title: Start here!
     body: 01_welcome-issue.md
+    store:
+      firstIssueUrl: '%payload.issue.html_url%'
     action_id: welcomeIssue
   - type: respond
     issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
     data:
-      quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
+      quicklink: '%store.repo_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
 steps:
   - title: Setup a workflow file
     description: Create a pull request to add a workflow
     event: 
       - pull_request.opened
       - pull_request.edited
-    link: '{{ repoUrl }}/issues/1'
+    link: '{{ store.firstIssueUrl }}'
     actions:
       # if the pull request title equals 'Create my first workflow'
       - type: gate
@@ -75,8 +78,6 @@ steps:
         issue: Start here!
       - type: respond
         with: 01_explain-workflow.md
-        data:
-          actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 01_explain-environment.md
       - type: respond
@@ -87,7 +88,7 @@ steps:
         with: 02_modify-workflow.md
         issue: Create my first workflow
         data:
-          workflowFile: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
+          workflowFile: '%store.repoUrl%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
   - title: Edit the current workflow
     description: Remove boilerplate steps from `my-workflow.yml`
