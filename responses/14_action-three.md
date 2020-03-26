@@ -2,6 +2,8 @@
 
 As with the other actions we wrote, we are going to need to setup a few directories and files.
 
+## Add dependencies for issue-maker action
+
 This time we will start with the dependencies for our action. JavaScript projects can be packaged with a `package.json` file which contains metadata and configuration information about a project. In our case we will use some pieces of the [actions toolkit](https://github.com/actions/toolkit).
 
 ### :keyboard: Activity: Add `package.json` to issue-maker

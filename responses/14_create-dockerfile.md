@@ -1,4 +1,6 @@
-### :keyboard: Activity: Create issue-maker's `Dockerfile`
+## Add the issue-maker action's `Dockerfile`
+
+### :keyboard: Activity: Create `Dockerfile` for issue-maker
 
 One more piece to add and that is this actions `Dockerfile`. Once you complete this you will have all the pieces in place to use your final action!
 

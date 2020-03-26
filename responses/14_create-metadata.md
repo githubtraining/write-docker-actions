@@ -1,4 +1,4 @@
-## Create the third actions `action.yml` file
+## Create the issue-maker's action metadata
 
 Like our "hello world" action, this action will require at least one `input:` parameter. We need this parameter so that our JavaScript for this action has access to the `output:` from the joke action.
 
@@ -25,9 +25,7 @@ We also will also need to authenticate to GitHub with the action so that we can 
 
 Our action will also need to accept an input so that we can let the user specify a name for the issue that will be created when this action runs.
 
----
-
-### :keyboard: Activity: Create the final metadata file
+### :keyboard: Activity: Add `action.yml` for issue-maker
 
 💡All of the following steps take place inside of the `.github/actions/issue-maker` directory.
 

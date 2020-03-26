@@ -681,7 +681,7 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/package.json'
 
-  - title: Start the issue-maker action
+  - title: Add dependencies for issue-maker action
     description: Add `package.json` to issue-maker
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/8'
@@ -729,8 +729,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/action.yml'
 
-  - title: Add source code for the JavaScript based action
-    description: Create the JavaScript files for the third action
+  - title: Create the issue-maker's action metadata
+    description: Add `action.yml` for issue-maker
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/8'
     actions:
@@ -777,8 +777,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/src/index.js'
 
-  - title: Create the final action's Dockerfile
-    description: Add the final action's Dockerfile
+  - title: Add the issue-maker action's source code
+    description: Add `src/index.js` for issue-maker
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/8'
     actions:
@@ -825,8 +825,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/Dockerfile'
 
-  - title: Trigger the third action
-    description: Add a pull request label to trigger the workflow
+  - title: Add the issue-maker action's `Dockerfile`
+    description: Create `Dockerfile` for issue-maker
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/8'
     actions:
