@@ -3,7 +3,7 @@
 ### :keyboard: Activity: Create a pull request to add a workflow
 
 1. Create a new workflow file titled `my-workflow.yml` by using the instructions below, or [this quicklink]({{quicklink}}).
-   - Go to the [Actions tab]({{ registration.store.actionsUrl }}/new).
+   - Go to the [Actions tab]({{ store.actionsUrl }}/new).
    - Choose the **Set up a workflow yourself** option, located on the top right hand corner of the screen.
    - Change the name of the file from `main.yml` to `my-workflow.yml`.
 1. Commit the workflow to a new branch named `add-initial-workflow`.
