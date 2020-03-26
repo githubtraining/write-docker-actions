@@ -545,8 +545,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/Dockerfile'
 
-  - title: Use the cat fact action in a workflow
-    description: Edit the workflow file to use the newly created cat fact action
+  - title: Add the cat-fact `Dockerfile`
+    description: Create `Dockerfile` for the cat-fat action
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/6'
     actions:
@@ -597,8 +597,8 @@ steps:
           workflowFile: '%payload.repository.html_url%/edit/%actions.apiPr.data.head.ref%/.github/workflows/my-workflow.yml'
           actionsUrl: '%payload.repository.html_url%/actions'
 
-  - title: Have actions teach us about cats
-    description: Trigger your workflow to get cat facts
+  - title: Use the cat-fat action
+    description: Restore the workflow file
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/6'
     actions:
@@ -618,8 +618,8 @@ steps:
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
 
-  - title: Configure the workflow for a third action
-    description: Edit the workflow to accomodate the third action
+  - title: Get ready to purr
+    description: Trigger a cat fact
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/6'
     actions:
@@ -649,8 +649,8 @@ steps:
         data:
           issueUrl: '%actions.outputIssue.data.html_url%'
 
-  - title: Write the final action
-    description: Create an action that consumes output from another action and uses the JavaScript actions toolkit
+  - title: Reference the issue-maker action
+    description: Reference issue-maker in the `my-workflow.yml`
     event: 
       - pull_request.opened
       - pull_request.edited
@@ -681,8 +681,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/issue-maker/package.json'
 
-  - title: Add third action's metadata
-    description: Create `action.yml` for the third action
+  - title: Start the issue-maker action
+    description: Add `package.json` to issue-maker
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/8'
     actions:

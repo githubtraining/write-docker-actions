@@ -25,9 +25,11 @@ Your third, and final, Docker action of this course is going to do quite a bit t
 - Since it is JavaScript we can use the [Actions ToolKit](https://github.com/actions/toolkit).
 - It is also going to consume the `outputs` of your cat action and use them to help create issues in your repository.
 
+## Reference the issue-maker action
+
 We need to make some edits to the `my-workflow.yml` file to get it configured to use this final action.
 
-### :keyboard: Activity: Final workflow edit
+### :keyboard: Activity: Reference issue-maker in the `my-workflow.yml`
 
 1. [Edit]({{workflowFile}}) your `.github/workflows/my-workflow.yml` file to contain the following contents:
 

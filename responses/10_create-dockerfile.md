@@ -1,4 +1,4 @@
-### :keyboard: Activity: Create cat fact `Dockerfile`
+## Add the cat-fact `Dockerfile`
 
 Awesome 🎉
 
@@ -7,6 +7,8 @@ This action now has three of the four key files it needs to run:
 - Source-code
 - Metadata
 - Requirements.txt
+
+### :keyboard: Activity: Create `Dockerfile` for the cat-fat action
 
 Lastly we will create the `Dockerfile`, just like we did with our first action.
 
