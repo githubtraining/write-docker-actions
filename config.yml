@@ -41,7 +41,7 @@ before:
     title: Start here!
     body: 01_welcome-issue.md
     store:
-      firstIssueUrl: '%result.issue.html_url%'
+      firstIssueUrl: '%result.data.issue.html_url%'
     action_id: welcomeIssue
   - type: respond
     issue: '%actions.welcomeIssue.data.number%'
