@@ -41,9 +41,10 @@ before:
   - type: respond
     issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
+    store:
+      actionsUrl: '%payload.repository.html_url%/actions%'
     data:
       quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
-      actionsUrl: '%payload.repository.html_url%/actions/new'
 steps:
   - title: Setup a workflow file
     description: Create a pull request to add a workflow
