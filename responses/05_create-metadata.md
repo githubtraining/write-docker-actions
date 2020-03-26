@@ -1,8 +1,8 @@
-## Enough talk, lets do this!
+## Create the action metadata
 
 Now that we know what action metadata is, let's create the metadata for our **hello-world** action.
 
-### :keyboard: Activity: Create the metadata file
+### :keyboard: Activity: Create an `action.yml` file and add necessary metadata
 
 💡All of the following steps take place inside of the `.github/actions/hello-world` directory.
 
@@ -24,3 +24,7 @@ We will start with using the parameters that are **required** and later implemen
 1. Commit the changes to a new branch named `hello-world`
 1. Create a pull request titled **Add a Hello World action**.
 1. Supply the pull request body content and click `Create pull request`.
+
+---
+
+I'll respond when you create a new pull request.

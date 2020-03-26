@@ -1,4 +1,6 @@
-### :keyboard: Activity: Create the requirements.txt
+## Add Python dependencies
+
+### :keyboard: Activity: Create `requirements.txt` with your Python dependencies
 
 💡All of the following steps take place inside of the `.github/actions/cat-facts` directory.
 
@@ -11,8 +13,10 @@ A `requirements.txt` file is required so that the Python package manger, PIP, kn
    requests
    ```
 
-1. Commit the changes to the branch named `action-two`
+1. Commit the changes to this branch.
+
+📖[Master PIP](https://www.pythonforbeginners.com/pip/)
 
 ---
 
-📖[Master PIP](https://www.pythonforbeginners.com/pip/)
+I'll respond when you push changes to this pull request.

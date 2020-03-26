@@ -1,8 +1,8 @@
-## Workflow update!
+## Use input parameters in the workflow
 
 The last piece to this actions puzzle is to edit the workflow file so that we can set custom values for these inputs.
 
-### :keyboard: Activity: Update the workflow file
+### :keyboard: Activity: Assign values to the newly created input parameters in `my-workflow.yml`
 
 💡All of the following steps take place inside of the `.github/workflows` directory.
 
@@ -30,4 +30,4 @@ The last piece to this actions puzzle is to edit the workflow file so that we ca
 
 ---
 
-I'll respond when I notice you have completed this step
+I'll respond when you push changes to this pull request.

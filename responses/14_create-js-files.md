@@ -1,4 +1,6 @@
-### :keyboard: Activity: Create the final source code files
+## Add the issue-maker action's source code
+
+### :keyboard: Activity: Add `src/index.js` for issue-maker
 
 💡All of the following steps take place inside of the `.github/actions/issue-maker/src` directory.
 
@@ -36,4 +38,4 @@
 
 ---
 
-I will respond once you have finished.
+I'll respond when you push changes to this pull request.

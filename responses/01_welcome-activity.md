@@ -1,6 +1,6 @@
-## Configuring a workflow
+## Setup a workflow file
 
-### :keyboard: Activity: Create a pull request to prepare the repository for actions
+### :keyboard: Activity: Create a pull request to add a workflow
 
 1. Create a new workflow file titled `my-workflow.yml` by using the instructions below, or [this quicklink]({{quicklink}}).
    - Go to the [Actions tab]({{ actionsUrl }}).
@@ -18,8 +18,6 @@ _It is important to place meaningful content into the body of the pull requests 
 
 </details>
 
-I'll respond in the new pull request when I detect it has been created.
-
 ---
 
-If at any point you're expecting a response and don't see one, refresh the page.
+I'll respond in the new pull request when I detect it has been created. If at any point you're expecting a response and don't see one, refresh the page.

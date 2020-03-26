@@ -1,4 +1,4 @@
-## Using your new action
+## Use the cat-fat action
 
 At this point we can't expect much from our workflow, if you remember all of its contents are commented out. Let's go ahead and fix that now so that we can see our action fetch us a cat fact.
 
@@ -37,4 +37,4 @@ Let's change the tigger and add the cat fact action
 
 ---
 
-I'll respond once you commit your changes
+I'll respond when you push changes to this pull request.

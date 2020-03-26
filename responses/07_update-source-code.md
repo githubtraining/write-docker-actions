@@ -1,8 +1,8 @@
-## Source code update!
+## Use input parameters in the source code
 
 Great job 👍 next let's update our source code to consume the inputs that are now defined.
 
-### :keyboard: Activity: Update the action source code
+### :keyboard: Activity: Extend Hello World's source code to accept the input parameters
 
 💡All of the following steps take place inside of the `.github/actions/hello-world` directory.
 
@@ -40,4 +40,4 @@ Great job 👍 next let's update our source code to consume the inputs that are 
 
 ---
 
-I'll respond when I notice you have completed this step
+I'll respond when you push changes to this pull request.

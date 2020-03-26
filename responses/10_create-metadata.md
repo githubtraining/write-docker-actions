@@ -1,4 +1,6 @@
-### :keyboard: Activity: Create the metadata file
+## Add metadata to the cat-fats action
+
+### :keyboard: Activity: Create the cat-facts metadata file
 
 💡All of the following steps take place inside of the `.github/actions/cat-facts` directory.
 
@@ -27,4 +29,4 @@ We will not use the `fact` in in this portion of the course. There will be a lat
 
 ---
 
-I'll respond in this pull request when I notice you have completed these steps
+I'll respond when you push changes to this pull request.
