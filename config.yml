@@ -5,6 +5,12 @@ description: >-
 template:
   repo: 'write-docker-actions-template'
   name: 'write-docker-actions'
+tags:
+  - Docker
+  - Containers
+  - Workflows
+  - Application programming interface (API)
+  - Publishing GitHub Actions
 
 # Repo artifacts
 # 1. (Issue) Start here!
