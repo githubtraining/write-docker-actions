@@ -82,8 +82,8 @@ steps:
         data:
           workflowFile: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
-  - title: Add an action reference
-    description: Reference an action from the workflow file
+  - title: Edit the current workflow
+    description: Remove boilerplate steps from `my-workflow.yml`
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/2'
     actions:
@@ -104,8 +104,8 @@ steps:
         data:
           workflowFile: '%payload.repository.html_url%/edit/%actions.workflowPr.data.head.ref%/.github/workflows/my-workflow.yml'
 
-  - title: Create the action metadata
-    description: Create an `action.yml` file and add necessary metatdata for our action
+  - title: Add an action reference to the workflow
+    description: Reference our custom action from `my-workflow.yml`
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/2'
     actions:
@@ -137,8 +137,8 @@ steps:
         pullRequest: Create my first workflow
       - type: mergePullRequest
 
-  - title: Create the action logic
-    description: Add your action's source code
+  - title: Create the action metadata
+    description: Create an `action.yml` file and add necessary metadata
     event: 
       - pull_request.opened
       - pull_request.edited
@@ -172,8 +172,8 @@ steps:
       - type: closeIssue
         issue: Your first Docker based action
 
-  - title: Create the action's Dockerfile
-    description: Create a Dockerfile containing the Docker instructions
+  - title: Write the Hello World source code
+    description: Create `main.go` containing the Hello World source code
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -221,8 +221,8 @@ steps:
           actionsUrl: '%payload.repository.html_url%/actions'
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/hello-world/Dockerfile'
 
-  - title: Add input parameters to metadata
-    description: Extend your action's metadata to accept input parameters
+  - title: Create the action's `Dockerfile`
+    description: Create a `Dockerfile` containing the Docker instructions
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -276,8 +276,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/actions/hello-world/action.yml'
 
-  - title: Add input parameters to source code files
-    description: Extend your action source code to accept input parameters
+  - title: Add input parameters to Hello World's metadata
+    description: Update `action.yml` to accept input parameters for Hello World
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -295,8 +295,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/actions/hello-world/main.go'
 
-  - title: Use input parameters in the workflow
-    description: Assign values to the newly created input parameters
+  - title: Use input parameters in the source code
+    description: Extend Hello World's source code to accept the input parameters
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -314,8 +314,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
 
-  - title: Explore your input parameters
-    description: View the results of changing input parameters
+  - title: Use input parameters in the workflow
+    description: Assign values to the newly created input parameters in `my-workflow.yml`
     event: pull_request.synchronize #ideally would like workflow complete to trigger this
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -336,8 +336,8 @@ steps:
       - type: respond
         with: 08_experiment.md
 
-  - title: Integrate actions with external APIs
-    description: Write a new action that calls an external API
+  - title: Explore your input parameters
+    description: View the results of changing input parameters
     event: pull_request.closed
     link: '{{ repoUrl }}/pull/4'
     actions:
@@ -369,7 +369,7 @@ steps:
         data:
           issueUrl: '%actions.catFact.data.html_url%'
 
-  - title: Create your new action metadata
+  - title: Setting up the next action
     description: Comment out the lines in the workflow to prevent unwanted runs
     event: 
       - pull_request.opened
@@ -401,8 +401,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/action.yml'
 
-  - title: Create your action's source code files
-    description: Add `main.py` to your action
+  - title: Add metadata to the cat-fats action
+    description: Create the cat-facts metadata file
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/6'
     actions:
@@ -449,8 +449,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/src/main.py'
 
-  - title: Add Python dependencies
-    description: Add `requirements.txt` to your Python source code
+  - title: Fetch a cat fact
+    description: Create the Python source code for the cat-fats action
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/6'
     actions:
@@ -497,8 +497,8 @@ steps:
         data:
           quicklink: '%payload.repository.html_url%/new/%payload.pull_request.head.ref%?filename=.github/actions/cat-facts/requirements.txt'
 
-  - title: Create the Dockerfile for the API action
-    description: Add a Dockerfile to your API action
+  - title: Add Python dependencies
+    description:  Create `requirements.txt` with your Python dependencies
     event: pull_request.synchronize
     link: '{{ repoUrl }}/pull/6'
     actions:

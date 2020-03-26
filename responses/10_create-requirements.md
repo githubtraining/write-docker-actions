@@ -1,4 +1,6 @@
-### :keyboard: Activity: Create the requirements.txt
+## Add Python dependencies
+
+### :keyboard: Activity: Create `requirements.txt` with your Python dependencies
 
 💡All of the following steps take place inside of the `.github/actions/cat-facts` directory.
 

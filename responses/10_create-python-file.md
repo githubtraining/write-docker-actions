@@ -1,4 +1,4 @@
-### Fetching a cat fact
+## Fetch a cat fact
 
 **Cat Fact API**
 
@@ -31,9 +31,7 @@ To further demonstrate the flexibility of Docker actions we will create this one
 
 If Python is a new programming language to you, like always don't worry. You are here to learn about actions and we will supply all the necessary source code for you.
 
----
-
-### :keyboard: Activity: Creating the Python source code for your new action.
+### :keyboard: Activity: Create the Python source code for the cat-fats action
 
 1. Create and add the following contents to the `.github/actions/cat-facts/src/main.py` file:
    You can use [this link]({{quicklink}}) to easily create this file.

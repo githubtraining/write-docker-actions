@@ -1,8 +1,8 @@
-## Your turn!
+## Add input parameters to Hello World's metadata
 
 Now that we know what input parameters are, let's edit the metadata for our **hello-world** action.
 
-### :keyboard: Activity: Update the metadata file
+### :keyboard: Activity: Update `action.yml` to accept input parameters for Hello World
 
 💡All of the following steps take place inside of the `.github/actions/hello-world` directory.
 

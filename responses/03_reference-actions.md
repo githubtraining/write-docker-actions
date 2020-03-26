@@ -21,7 +21,9 @@ If you'd like to see more examples of workflows and actions then check out these
 - [GitHub Actions: Continuous Delivery](https://lab.github.com/githubtraining/github-actions:-continuous-delivery)
 - [GitHub Actions: Publish to GitHub Packages](https://lab.github.com/githubtraining/github-actions:-publish-to-github-packages)
 
-### :keyboard: Activity: Modify my-workflow.yml to run our custom action
+## Add an action reference to the workflow
+
+### :keyboard: Activity: Reference our custom action from `my-workflow.yml`
 
 1. [Edit]({{workflowFile}}) the `my-workflow.yml` to have the following contents:
 

@@ -1,10 +1,10 @@
-## Breaking our workflow
+## Setting up the next action
 
 Before we continue we are going to need to do a few things. First and foremost our workflow is currently setup to run each time there is a `push` event to this repository. As you can imagine, this generates a lot of noise when learning.
 
 Let's comment out our current workflow to prevent things from running but preserve the things you've worked on up to this point.
 
-### :keyboard: Activity: Setting up the next action
+### :keyboard: Activity: Comment out the lines in the workflow to prevent unwanted runs
 
 1. [Edit]({{workflowFile}}) your workflow file by commenting out every single line with the `#` character. The resulting file should look like this:
 

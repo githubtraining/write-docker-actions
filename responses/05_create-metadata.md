@@ -1,8 +1,8 @@
-## Enough talk, lets do this!
+## Create the action metadata
 
 Now that we know what action metadata is, let's create the metadata for our **hello-world** action.
 
-### :keyboard: Activity: Create the metadata file
+### :keyboard: Activity: Create an `action.yml` file and add necessary metadata
 
 💡All of the following steps take place inside of the `.github/actions/hello-world` directory.
 
