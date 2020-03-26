@@ -42,7 +42,7 @@ before:
     issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
     store:
-      actionsUrl: '%payload.repository.html_url%/actions%'
+      actionsUrl: '%payload.repository.html_url%/actions'
     data:
       quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
 steps:
