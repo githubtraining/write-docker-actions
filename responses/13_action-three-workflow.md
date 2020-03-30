@@ -63,7 +63,7 @@ We need to make some edits to the `my-workflow.yml` file to get it configured to
    ```
 
 1. Commit the changes to a new branch and name it `action-three`.
-1. Create a pull request named **Use Outputs**
+1. Create a pull request named **Use outputs**
 
 
 ---
