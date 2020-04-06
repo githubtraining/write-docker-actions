@@ -27,4 +27,4 @@ _Although the **workflow** file is used to allow us to set the `inputs` and `out
 
 **The failing workflow**
 
-You may be following along on the [Actions tab]({{actionsUrl}}) of this repository. If you are, you'll notice that the workflow we set up previously is failing. That is the currently expected behavior: we referenced an action in the `hello-world` directory, which doesn't yet exist. We will be fixing that as we move forward with the lesson.
+You may be following along on the [Actions tab]({{store.actionsUrl}}) of this repository. If you are, you'll notice that the workflow we set up previously is failing. That is the currently expected behavior: we referenced an action in the `hello-world` directory, which doesn't yet exist. We will be fixing that as we move forward with the lesson.

@@ -25,6 +25,9 @@ tags:
 
 before:
   - type: updateBranchProtection
+    store:
+      repoUrl: '%payload.repository.html_url%'
+      actionsUrl: '%payload.repository.html_url%/actions'
   - type: createLabel
     name: first-cat-fact
     color: FFBD33
@@ -37,27 +40,27 @@ before:
   - type: createIssue
     title: Start here!
     body: 01_welcome-issue.md
+    store:
+      firstIssueUrl: '%result.data.html_url%'
     action_id: welcomeIssue
   - type: respond
     issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
     data:
-      quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
-      actionsUrl: '%payload.repository.html_url%/actions/new'
+      quicklink: '%store.repo_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
 steps:
   - title: Setup a workflow file
     description: Create a pull request to add a workflow
     event: 
       - pull_request.opened
       - pull_request.edited
-    link: '{{ repoUrl }}/issues/1'
+    link: '{{ store.firstIssueUrl }}'
     actions:
       # if the pull request title equals 'Create my first workflow'
       - type: gate
         left: '%payload.pull_request.title%'
         operator: ===
         right: Create my first workflow
-
         # if those statments FAIL... do this
         else:
           - type: respond
@@ -65,17 +68,18 @@ steps:
             data:
               title: Create my first workflow
           # if those gates === true Then do this stuff
+      - type: closeIssue
+        issue: Start here!
+        store:
+          firstPrUrl: '%payload.pull_request.html_url%'
+          firstPrHead: '%payload.pull_request.head.ref%'
       - type: respond
         issue: Start here!
         with: new-pull-request.md
         data:
-          pullUrl: '%payload.pull_request.html_url%'
-      - type: closeIssue
-        issue: Start here!
+          pullUrl: '%store.firstPrUrl%'
       - type: respond
         with: 01_explain-workflow.md
-        data:
-          actionsUrl: '%payload.repository.html_url%/actions'
       - type: respond
         with: 01_explain-environment.md
       - type: respond
@@ -86,12 +90,12 @@ steps:
         with: 02_modify-workflow.md
         issue: Create my first workflow
         data:
-          workflowFile: '%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/.github/workflows/my-workflow.yml'
+          workflowFile: '%store.repoUrl%/edit/%store.firstPrHead%/.github/workflows/my-workflow.yml'
 
   - title: Edit the current workflow
     description: Remove boilerplate steps from `my-workflow.yml`
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.firstPrUrl }}'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -102,18 +106,15 @@ steps:
             with: e-generic.md
             data:
               expected: a commit to a pull request titled **Create my first workflow**
-      - type: getPullRequest
-        pullRequest: Create my first workflow
-        action_id: workflowPr
       - type: respond
         with: 03_reference-actions.md
         data:
-          workflowFile: '%payload.repository.html_url%/edit/%actions.workflowPr.data.head.ref%/.github/workflows/my-workflow.yml'
+          workflowFile: '%store.repoUrl%/edit/%store.firstPrHead%/.github/workflows/my-workflow.yml'
 
   - title: Add an action reference to the workflow
     description: Reference our custom action from `my-workflow.yml`
     event: pull_request.synchronize
-    link: '{{ repoUrl }}/pull/2'
+    link: '{{ store.firstPrUrl }}'
     actions:
       - type: gate
         left: '%payload.pull_request.title%'
@@ -128,9 +129,10 @@ steps:
         title: Your first Docker based action
         body: docker-overview.md
         action_id: dockerOverview
+        store:
+          firstDockerIssueUrl: '%result.data.html_url%'
         data:
-          actionsUrl: '%payload.repository.html_url%/actions/new'
-          quicklink: '%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/action.yml'
+          quicklink: '%store.repoUrl%/new/master?filename=.github/actions/hello-world/action.yml'
         comments:
           - 05_explain-actions.md
           - 05_explain-metadata.md
@@ -138,8 +140,6 @@ steps:
       - type: createReview
         event: APPROVE
         body: 04_on-to-actions.md
-        data:
-          issueUrl: '%actions.dockerOverview.data.html_url%'
         pullRequest: Create my first workflow
       - type: mergePullRequest
 
