@@ -12,4 +12,4 @@ Feel free to continue adding labels to this pull request if you want to see more
 
 ---
 
-When you are ready to move forward in the lesson merge this pull request into the `master` branch. I will respond when you've merged this pull request.
+When you are ready to move forward in the lesson merge this pull request into the `main` branch. I will respond when you've merged this pull request.

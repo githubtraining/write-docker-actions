@@ -15,7 +15,7 @@ A `requirements.txt` file is required so that the Python package manger, PIP, kn
 
 1. Commit the changes to this branch.
 
-📖[Master PIP](https://www.pythonforbeginners.com/pip/)
+📖[Learn PIP](https://www.pythonforbeginners.com/pip/)
 
 ---
 
