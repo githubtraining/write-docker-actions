@@ -42,7 +42,7 @@ before:
     issue: '%actions.welcomeIssue.data.number%'
     with: 01_welcome-activity.md
     data:
-      quicklink: '%payload.repository.html_url%/new/master?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
+      quicklink: '%payload.repository.html_url%/new/main?filename=.github/workflows/my-workflow.yml&workflow_template=blank'
       actionsUrl: '%payload.repository.html_url%/actions/new'
 steps:
   - title: Setup a workflow file
@@ -130,7 +130,7 @@ steps:
         action_id: dockerOverview
         data:
           actionsUrl: '%payload.repository.html_url%/actions/new'
-          quicklink: '%payload.repository.html_url%/new/master?filename=.github/actions/hello-world/action.yml'
+          quicklink: '%payload.repository.html_url%/new/main?filename=.github/actions/hello-world/action.yml'
         comments:
           - 05_explain-actions.md
           - 05_explain-metadata.md
@@ -366,7 +366,7 @@ steps:
         action_id: catFact
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
-          workflowFile: '%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml'
+          workflowFile: '%payload.repository.html_url%/edit/main/.github/workflows/my-workflow.yml'
         comments:
           - 09_new-action.md
       - type: respond
@@ -648,7 +648,7 @@ steps:
         action_id: outputIssue
         data:
           actionsUrl: '%payload.repository.html_url%/actions'
-          workflowFile: '%payload.repository.html_url%/edit/master/.github/workflows/my-workflow.yml'
+          workflowFile: '%payload.repository.html_url%/edit/main/.github/workflows/my-workflow.yml'
       - type: respond
         with: 12_next-steps.md
         issue: External APIs
