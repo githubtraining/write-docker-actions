@@ -44,7 +44,7 @@ If Python is a new programming language to you, like always don't worry. You are
    # Make an HTTP GET request to the cat-fact API
    cat_url = "https://cat-fact.herokuapp.com/facts"
    r = requests.get(cat_url)
-   r_obj_list = r.json()["all"]
+   r_obj_list = r.json()
 
    # Create an empty list to store individual facts in
    # This will make it easy to select a random one later
