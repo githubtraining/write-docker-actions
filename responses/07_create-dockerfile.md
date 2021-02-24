@@ -16,7 +16,7 @@ Lastly we will create the `Dockerfile`. Like with Go programming, it is perfectl
    You can use [this link]({{quicklink}}) to easily create this file in the proper location.
 
    ```dockerfile
-   FROM golang:latest
+   FROM golang:1.15
    WORKDIR /go/src/hello
    COPY . .
    RUN go get -d -v ./...
