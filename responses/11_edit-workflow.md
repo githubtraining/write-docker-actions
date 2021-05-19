@@ -1,4 +1,4 @@
-## Use the cat-fat action
+## Use the cat-fact action
 
 At this point we can't expect much from our workflow, if you remember all of its contents are commented out. Let's go ahead and fix that now so that we can see our action fetch us a cat fact.
 
