@@ -35,7 +35,7 @@ Our action will also need to accept an input so that we can let the user specify
    ```yml
    name: "issue maker"
 
-   description: "create and issue with a cat fact as the body"
+   description: "create an issue with a cat fact as the body"
 
    inputs:
      issueTitle:
