@@ -28,9 +28,9 @@ When we make our request to this API we will get back a JSON Object in the respo
 }
 ```
 
-It contains an Object of data that we can use in our own program or service. In our case, we are only interested in the `data` field.
+It contains an Object of data that we can use in our own program or service. In our case, we are only interested in the `fact` field.
 
-Our action will extract the `data` field in a new array, then select a random index to display in the console as our random cat fact.
+Our action will extract the `fact` field in a new array, then select a random index to display in the console as our random cat fact.
 
 To further demonstrate the flexibility of Docker actions we will create this one using Python.
 
@@ -51,14 +51,15 @@ To get more results from the Cat Fact API we will append the `limit` query param
    # Make an HTTP GET request to the Cat Fact API
    cat_url = "https://catfact.ninja/facts?limit=50"
    r = requests.get(cat_url)
-   r_obj_list = r.json()["data"] 
+   r_obj_list = r.json()
 
    # Create an empty list to store individual facts in
    # This will make it easy to select a random one later
    fact_list = []
 
-   # Add the "fact" of every object into the fact_list list
-   for fact in r_obj_list:
+   # We loop through the "data" key in our r_obj_list list and
+   # add the "fact" of every object into the fact_list list
+   for fact in r_obj_list["data"]:
        fact_list.append(fact["fact"])
 
    # Select a random fact from the fact_list and return it
